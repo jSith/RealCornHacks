@@ -1,0 +1,21 @@
+.credentials {
+    max-width: 40%;
+    margin: auto;
+}
+
+.credentials-label {
+    width: 100%;
+    text-align: left;
+}
+
+#createHeader {
+    padding-top: 30px;
+}
+
+#emailGroup {
+    padding-top: 30px;
+}
+
+#passwordGroup {
+    padding-top: 20px
+}
