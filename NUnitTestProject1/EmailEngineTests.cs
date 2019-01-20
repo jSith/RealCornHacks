@@ -33,6 +33,8 @@ namespace NUnitTestProject1
             user.Email = "safutterman@outlook.com";
             user.Preference = new Preference
             {
+                Languages = new List<string> { "Python" },
+                Topics = new List<string> { "Machine Learning"},
                 IsBeginner = false, 
                 Sizes = new List<SizeEnum.Size> { SizeEnum.Size.Medium} 
             }; 

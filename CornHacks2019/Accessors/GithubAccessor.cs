@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cornhacks2019.Accessors
@@ -20,7 +20,6 @@ namespace Cornhacks2019.Accessors
         public GithubAccessor()
         {
             _client.DefaultRequestHeaders.Add("user-agent", "unl");
-            _client.DefaultRequestHeaders.Add("Authorization", "Bearer 6a1d171c87908dbbdedcd51e9c2cc4e0ef6c69fa"); 
         }
 
         public async Task<List<Issue>> GetIssuesAsync(Repository repo)
@@ -37,14 +36,55 @@ namespace Cornhacks2019.Accessors
 
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
+            var dbos = new List<RepoDBO>(); 
+
             List<Repository> repo = new List<Repository>(); 
             string url = _githubUrl + "/repositories";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                repo = await response.Content.ReadAsAsync<List<Repository>>();
+                dbos = await response.Content.ReadAsAsync<List<RepoDBO>>();
+            }
+
+
+
+            foreach (var dbo in dbos)
+            {
+                var cleanUrl = dbo.Issues_Url.Replace("{/number}", ""); 
+                var issues = await GetIssuesAsync(cleanUrl);
+                repo.Add(new Repository
+                {
+                    Name = dbo.Name,
+                    Description = dbo.Description, 
+                    NumberOfContributors = dbo.NumberOfContributors, 
+                    Issues = issues, 
+                    Url = dbo.Html_Url, 
+                    Owner = dbo.Owner
+                }); 
             }
             return repo; 
+        }
+
+        public async Task<List<Issue>> GetIssuesAsync(string url)
+        {
+            var issues = new List<Issue>(); 
+            HttpResponseMessage response = await _client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                issues = await response.Content.ReadAsAsync<List<Issue>>();
+            }
+            return issues; 
+        }
+
+        public async Task<List<string>> GetLanguagesAsync(string url)
+        {
+            var issues = new List<string>();
+            HttpResponseMessage response = await _client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                issues = await response.Content.ReadAsAsync<List<string>>();
+            }
+            return issues;
         }
 
         public async Task<List<string>> GetIssueLabels(Repository repo, int issueId)

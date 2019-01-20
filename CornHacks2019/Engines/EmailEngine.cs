@@ -19,9 +19,10 @@ namespace Cornhacks2019.Engines
         {
             _body = File.ReadAllText(_filePath);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var repo = repos[i]; 
+                var issue = repo.Issues.First(); 
 
                 switch (i)
                 {                    
@@ -30,6 +31,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoTitle0]", repo.Name);
                         _body = _body.Replace("[RepoUrl0]", repo.Url);
                         _body = _body.Replace("[RepoDescription0]", repo.Description);
+                        _body = _body.Replace("[RepoIssue0]", issue.Title);
                         break;
 
                     case 1:
@@ -37,6 +39,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoTitle1]", repo.Name);
                         _body = _body.Replace("[RepoUrl1]", repo.Url);
                         _body = _body.Replace("[RepoDescription1]", repo.Description);
+                        _body = _body.Replace("[RepoIssue1]", issue.Title);
                         break;
 
                     case 2:
@@ -44,6 +47,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoTitle2]", repo.Name);
                         _body = _body.Replace("[RepoUrl2]", repo.Url);
                         _body = _body.Replace("[RepoDescription2]", repo.Description);
+                        _body = _body.Replace("[RepoIssue2]", issue.Title);
                         break;
 
                     case 3:
@@ -51,6 +55,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoTitle3]", repo.Name);
                         _body = _body.Replace("[RepoUrl3]", repo.Url);
                         _body = _body.Replace("[RepoDescription3]", repo.Description);
+                        _body = _body.Replace("[RepoIssue3]", issue.Title);
                         break;
 
                     case 4:
@@ -58,6 +63,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoTitle4]", repo.Name);
                         _body = _body.Replace("[RepoUrl4]", repo.Url);
                         _body = _body.Replace("[RepoDescription4]", repo.Description);
+                        _body = _body.Replace("[RepoIssue4]", issue.Title);
                         break;
 
                     case 5:
@@ -65,6 +71,7 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[SponsRepoTitle]", repo.Name);
                         _body = _body.Replace("[SponsRepoUrl]", repo.Url);
                         _body = _body.Replace("[SponsRepoDescription]", repo.Description);
+                        _body = _body.Replace("[SponsRepoIssue]", issue.Title);
                         break;
                 }
             }
