@@ -29,7 +29,7 @@ namespace Cornhacks2019.Engines
         {
             _body = File.ReadAllText(_filePath);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 var repo = repos[i];
                 var issue = repo.Issues.First();
@@ -58,22 +58,6 @@ namespace Cornhacks2019.Engines
                         _body = _body.Replace("[RepoUrl2]", repo.Url);
                         _body = _body.Replace("[RepoDescription2]", repo.Description);
                         _body = _body.Replace("[RepoIssue2]", issue.Title);
-                        break;
-
-                    case 3:
-                        _body = _body.Replace("[RepoAvatar3]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle3]", repo.Name);
-                        _body = _body.Replace("[RepoUrl3]", repo.Url);
-                        _body = _body.Replace("[RepoDescription3]", repo.Description);
-                        _body = _body.Replace("[RepoIssue3]", issue.Title);
-                        break;
-
-                    case 4:
-                        _body = _body.Replace("[RepoAvatar4]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle4]", repo.Name);
-                        _body = _body.Replace("[RepoUrl4]", repo.Url);
-                        _body = _body.Replace("[RepoDescription4]", repo.Description);
-                        _body = _body.Replace("[RepoIssue4]", issue.Title);
                         break;
 
                     case 5:
