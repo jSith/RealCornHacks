@@ -10,11 +10,11 @@ namespace Cornhacks2019.Engines
 {
     public class GithubEngine : IGithubEngine
     {
-        GithubAccessor _githubAccessor = new GithubAccessor();
+        GithubAccessor _githubAccessor; 
 
-        public GithubEngine()
+        public GithubEngine(GithubAccessor githubAccessor)
         {
-
+            _githubAccessor = githubAccessor; 
         }
 
         public List<Repository> FilterRepositories(List<Repository> repos, User user)
@@ -23,31 +23,37 @@ namespace Cornhacks2019.Engines
 
             foreach (Repository repo in repos)
             {
-                bool descriptionContainsTopic = false;
                 foreach (string topic in user.Preference.Topics)
                 {
-                    if (repo.Description.Contains(topic))
+                    if (!repo.Description.Contains(topic))
                     {
-                        descriptionContainsTopic = true;
+                        continue; 
                     }
                 }
 
-                bool repoSupportsLanguage = false;
                 foreach (string language in user.Preference.Languages)
                 {
                     repo.Languages.ConvertAll(str => str.ToLower());
-                    if (repo.Languages.Contains(language.ToLower()))
+                    if (!repo.Languages.Contains(language.ToLower()))
                     {
-                        repoSupportsLanguage = true;
+                        continue; 
                     }
                 }
 
-                if (descriptionContainsTopic && repoSupportsLanguage)
-                {
-                    finalRepos.Add(repo);
-                }
+                 finalRepos.Add(repo);
             }
             return finalRepos;
+        }
+
+        public async Task<Dictionary<Issue, List<string>>> GetIssueLabels(Repository repo, List<Issue> issues)
+        {
+            var dict = new Dictionary<Issue, List<string>>(); 
+            foreach (var issue in issues)
+            {
+                var labels = await _githubAccessor.GetIssueLabels(repo, issue.Id);
+                dict[issue] = labels; 
+            }
+            return dict; 
         }
 
         public async Task<Dictionary<int, KeyValuePair<Repository, Issue>>> CreateRepositoryIssueDictionary(List<Repository> repos)
