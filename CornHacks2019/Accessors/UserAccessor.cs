@@ -24,14 +24,9 @@ namespace Cornhacks2019.Accessors
             _server = "localhost";
             _database = "Cornhacks";
             _uid = "root";
-            _password = "";
+            _password = "syfsyndh10";
             _connectionString = "SERVER=" + _server + ";" + "DATABASE=" +
                 _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";";
-        }
-
-        public void Connect()
-        {
-
         }
 
         public User Insert(User user)
@@ -42,12 +37,16 @@ namespace Cornhacks2019.Accessors
                 MySqlCommand cmd = connection.CreateCommand();
 
                 /* Get User table query */
-                cmd.CommandText = 
+                cmd.CommandText =
                     @"INSERT INTO User (Email, Password, IsBeginner)
                       VALUES (@Email, @Password, @IsBeginner);";
                 cmd.Parameters.AddWithValue("@Email", user.Email);
                 cmd.Parameters.AddWithValue("@Password", user.Password);
                 cmd.Parameters.AddWithValue("@IsBeginner", user.Preference.IsBeginner);
+
+                cmd.CommandText = @"SELECT UserId FROM User
+                    WHERE Email = @Email"; 
+
                 int userId = (int)cmd.ExecuteScalar();
 
                 foreach (string language in user.Preference.Languages)
@@ -55,8 +54,8 @@ namespace Cornhacks2019.Accessors
                     /* Language table query */
                     cmd.Parameters.Clear();
                     cmd.CommandText =
-                        @"INSERT INTO Language (LanguageName)
-                          VALUES (@LanguageName);";
+                        @"SELECT LanguageId FROM Language
+                            WHERE LanguageName = @LanguageName;";
                     cmd.Parameters.AddWithValue("@LanguageName", language);
                     int languageId = (int)cmd.ExecuteScalar();
 
@@ -75,8 +74,8 @@ namespace Cornhacks2019.Accessors
                     /* Topic table query */
                     cmd.Parameters.Clear();
                     cmd.CommandText =
-                        @"INSERT INTO Topic (TopicName)
-                          VALUES (@TopicName);";
+                        @"SELECT TopicId FROM Topic
+                          WHERE TopicName = @TopicName;";
                     cmd.Parameters.AddWithValue("@TopicName", topic);
                     int topicId = (int)cmd.ExecuteScalar();
 
@@ -95,8 +94,8 @@ namespace Cornhacks2019.Accessors
                     /* Size table query */
                     cmd.Parameters.Clear();
                     cmd.CommandText =
-                        @"INSERT INTO Size (SizeName)
-                          VALUES (@SizeName);";
+                        @"SELECT SizeId FROM Size
+                            WHERE SizeName = @SizeName;";
                     cmd.Parameters.AddWithValue("@SizeName", size);
                     int sizeId = (int)cmd.ExecuteScalar();
 
@@ -181,7 +180,32 @@ namespace Cornhacks2019.Accessors
             return cleanedUsers;
         }
 
+        public User Delete (User user)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = connection.CreateCommand();
 
+                cmd.CommandText = "SELECT UserId FROM User WHERE Email = @Email";
+                cmd.Parameters.AddWithValue("@Email", user.Email); 
+
+                int userId = (int)cmd.ExecuteScalar();
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                cmd.CommandText = "DELETE FROM UserLanguage WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery(); 
+
+                cmd.CommandText = "DELETE FROM UserTopic WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery(); 
+
+                cmd.CommandText = "DELETE FROM UserSize WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "DELETE FROM User WHERE UserId = @UserId"; 
+            }
+            return user;
+        }
 
     }
 }
