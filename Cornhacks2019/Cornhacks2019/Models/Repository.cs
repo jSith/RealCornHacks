@@ -8,8 +8,6 @@ namespace Cornhacks2019.Models
     {
         public string Name { get; set; }
 
-        public string FullName { get; set; }
-
         public string Description { get; set; }
 
         public int NumberOfContributors { get; set; }

@@ -10,13 +10,8 @@ namespace Tests
 {
     public class Tests
     {
-        GithubAccessor _githubAccessor = new GithubAccessor();
-        GithubEngine _githubEngine = new GithubEngine();
-
-        [SetUp]
-        public void Setup()
-        {
-        }
+        private static GithubAccessor _githubAccessor = new GithubAccessor();
+        GithubEngine _githubEngine = new GithubEngine(_githubAccessor);
 
         [Test]
         public async Task GithubAccessTestAsync()
@@ -41,9 +36,7 @@ namespace Tests
         public async Task TestFullApi()
         {
             User user = new User();
-            var repositories = await _githubAccessor.GetPublicRepositoriesAsync();
-            repositories = _githubEngine.FilterRepositories(repositories, user);
-            var dic = await _githubEngine.CreateRepositoryIssueDictionary(repositories);
+            var repos = _githubEngine.GetValidIssues(user); 
             Assert.Pass();
         }
     }
