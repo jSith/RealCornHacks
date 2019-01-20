@@ -1,19 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Homepage from './components/HomepageComponent';
 import CreateAccount from './components/CreateAccountComponent';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <CreateAccount />
-//       </div>
-//     );
-//   }
-// }
-
-const Home = () => <div>Click here to <Link to="/subscribe/">Subscribe</Link></div>;
+const Home = () => <Homepage />;
 const Subscribe = () => <CreateAccount />;
 
 const AppRouter = () => (
