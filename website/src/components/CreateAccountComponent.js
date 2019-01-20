@@ -6,6 +6,8 @@ import Survey from './SurveyComponent';
 import { Questions, Sizes, isBeginner as BeginVals } from '../data/SurveyQuestions';
 import CredentialFields from '../data/CredentialFields';
 
+const EMAIL_REGEX = new RegExp("^([a-zA-Z0-9_\\-\\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+
 class CreateAccount extends Component {
     constructor(props) {
         super(props);
@@ -85,7 +87,7 @@ class CreateAccount extends Component {
         const password = this.state.password;
         const preference = this.getPreferences();
 
-        if (email === undefined) {
+        if (email === undefined || !EMAIL_REGEX.test(email)) {
             alert("Please enter a valid email address.");
             this.setState({ emailValid: false });
         } else if (password === undefined) {
