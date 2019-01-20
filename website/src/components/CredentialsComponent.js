@@ -9,16 +9,16 @@ class Credentials extends Component {
                 <Form>
                     <FormGroup id="emailGroup">
                         <Label for="email" className="credentials-label"><strong>Email</strong></Label>
-                        <Input type="email" name="email" id="email" placeholder="example@email.com" />
+                        <Input type="email" className="credentials-input" name="email" id="email" placeholder="example@email.com" />
                     </FormGroup>
                     
                     <FormGroup id="passwordGroup">
                         <Label for= "password" className="credentials-label"><strong>Password</strong></Label>
-                        <Input type="password" name="passwaord" id="password" />
+                        <Input type="password" className="credentials-input" name="password" id="password" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="confirmPassword" className="credentials-label"><strong>Confirm password</strong></Label>
-                        <Input type="password" name="confirmPassword" id="confirmPassword" />
+                        <Input type="password" className="credentials-input" name="confirmPassword" id="confirmPassword" />
                     </FormGroup>
                 </Form>
             </div>
