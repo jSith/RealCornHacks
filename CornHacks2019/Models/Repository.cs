@@ -26,5 +26,7 @@ namespace Cornhacks2019.Models
     public class Owner
     {
         public string Login { get; set; }
+
+        public string Avatar_Url { get; set; }
     }
 }
