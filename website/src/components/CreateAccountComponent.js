@@ -95,8 +95,24 @@ class CreateAccount extends Component {
             alert("Passwords do not match.");
             this.setState({ passValid: false });
         } else {
-            this.setState({ emailValid: true, passValid: true });
-            alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
+            let allSuccess = true;
+
+            for (const question of ["topics", "languages", "sizes"]) {
+                if (allSuccess && preference[question].length === 0) {
+                    allSuccess = false;
+                    alert(`Please select one or more ${question}.`);
+                }
+            }
+
+            if (allSuccess && preference.isBeginner === undefined) {
+                allSuccess = false;
+                alert(`Please select whether you are new to open source.`);
+            }
+
+            if (allSuccess) {
+                this.setState({ emailValid: true, passValid: true });
+                alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
+            }
         }
     }
 
