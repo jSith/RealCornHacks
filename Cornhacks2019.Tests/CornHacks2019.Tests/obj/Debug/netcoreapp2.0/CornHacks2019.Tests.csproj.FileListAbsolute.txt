@@ -1,0 +1,14 @@
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\CornHacks2019.Tests.deps.json
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\CornHacks2019.Tests.runtimeconfig.json
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\CornHacks2019.Tests.runtimeconfig.dev.json
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\CornHacks2019.Tests.dll
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\bin\Debug\netcoreapp2.0\CornHacks2019.Tests.pdb
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.csprojResolveAssemblyReference.cache
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.csproj.CoreCompileInputs.cache
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.AssemblyInfoInputs.cache
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.AssemblyInfo.cs
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.dll
+D:\Git\RealCornHacks\CornHacks2019.Tests\CornHacks2019.Tests\obj\Debug\netcoreapp2.0\CornHacks2019.Tests.pdb
