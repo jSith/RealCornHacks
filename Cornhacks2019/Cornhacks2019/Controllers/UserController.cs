@@ -18,7 +18,7 @@ namespace Cornhacks2019.Controllers
         }
 
         [HttpPost]
-        public ActionResult<User> Subscribe(User user)
+        public ActionResult<User> Subscribe([FromBody] User user)
         {
             var subscribedUser = _subscriptionEngine.Subscribe(user);
             return subscribedUser;

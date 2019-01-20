@@ -121,10 +121,10 @@ class CreateAccount extends Component {
     }
 
     addUser(email, password, preference) {
-        axios.post(`${process.env.REACT_APP_SERVICE_URL}/api/user`, {
-            email,
-            password,
-            preference
+        axios.post(`${process.env.REACT_APP_SERVICE_URL}/api/users`, {
+            Email: email,
+            Password: password,
+            Preference: preference
         }).then(() => {
             alert("Thank you for subscribing! Check your email for your first newsletter!");
         }).catch(error => {

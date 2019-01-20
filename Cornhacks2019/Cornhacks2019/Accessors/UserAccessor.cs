@@ -38,6 +38,8 @@ namespace Cornhacks2019.Accessors
                 cmd.Parameters.AddWithValue("@Password", user.Password);
                 cmd.Parameters.AddWithValue("@IsBeginner", user.Preference.IsBeginner);
 
+                cmd.ExecuteNonQuery();
+
                 cmd.CommandText = @"SELECT UserId FROM User
                     WHERE Email = @Email"; 
 
@@ -79,7 +81,7 @@ namespace Cornhacks2019.Accessors
                         @"INSERT INTO UserTopic (UserId, TopicId)
                           VALUES (@UserId, @TopicId);";
                     cmd.Parameters.AddWithValue("@UserId", userId);
-                    cmd.Parameters.AddWithValue("@TopicName", topicId);
+                    cmd.Parameters.AddWithValue("@TopicId", topicId);
                     cmd.ExecuteNonQuery();
                 }
                 
@@ -88,9 +90,8 @@ namespace Cornhacks2019.Accessors
                     /* Size table query */
                     cmd.Parameters.Clear();
                     cmd.CommandText =
-                        @"SELECT SizeId FROM Size
-                            WHERE SizeName = @SizeName;";
-                    cmd.Parameters.AddWithValue("@SizeName", size);
+                        @"SELECT SizeId FROM Size WHERE SizeName = @SizeName;";
+                    cmd.Parameters.AddWithValue("@SizeName", SizeEnum.ToString(size));
                     int sizeId = (int)cmd.ExecuteScalar();
 
                     /* UserSize table query */
@@ -99,7 +100,8 @@ namespace Cornhacks2019.Accessors
                         @"INSERT INTO UserSize (UserId, SizeId)
                           VALUES (@UserId, @SizeId);";
                     cmd.Parameters.AddWithValue("@UserId", userId);
-                    cmd.Parameters.AddWithValue("@SizeId", sizeId);               
+                    cmd.Parameters.AddWithValue("@SizeId", sizeId);
+                    cmd.ExecuteNonQuery();
                 }
             }
             return user;
