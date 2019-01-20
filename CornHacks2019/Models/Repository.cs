@@ -19,5 +19,12 @@ namespace Cornhacks2019.Models
         public List<string> Languages { get; set; }
 
         public string Url { get; set; }
+
+        public Owner Owner { get; set; }
+    }
+
+    public class Owner
+    {
+        public string Login { get; set; }
     }
 }
