@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Accessors
 {
-    class UserAccessor
+    public class UserAccessor
     {
     }
 }

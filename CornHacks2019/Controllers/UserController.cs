@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Controllers
 {
-    class UserController
+    public class UserController
     {
     }
 }

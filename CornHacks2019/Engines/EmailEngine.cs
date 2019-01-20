@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Engines
 {
-    class EmailEngine
+    public class EmailEngine
     {
     }
 }

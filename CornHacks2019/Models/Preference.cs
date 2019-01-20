@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Models
 {
-    class Preference
+    public class Preference
     {
     }
 }
