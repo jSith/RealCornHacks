@@ -32,8 +32,6 @@ class SurveyQuestion extends Component {
             rows.push(<Row key={i}>{checkboxes.slice(i, i + numCols)}</Row>);
         }
 
-        console.log(numCols);
-
         return rows;
     }
 
