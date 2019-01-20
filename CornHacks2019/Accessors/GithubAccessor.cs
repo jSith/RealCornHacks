@@ -1,4 +1,5 @@
 ﻿using Cornhacks2019.Models;
+using CornHacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cornhacks2019.Accessors
 {
-    class GithubAccessor
+    class GithubAccessor : IGithubAccessor
     {
         private readonly string _githubUrl = "https://api.github.com";
 
