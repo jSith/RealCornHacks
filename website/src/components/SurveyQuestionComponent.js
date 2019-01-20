@@ -13,7 +13,9 @@ class SurveyQuestion extends Component {
 
     organizeColumns() {
         const checkboxes = this.props.options.map(name => 
-            <Col className="option" ><CustomInput type="checkbox" id={name} key={name} label={name} /></Col>
+            <Col className="option" key={"col" + name}>
+                <CustomInput type="checkbox" id={name} key={"box" + name} label={name} />
+            </Col>
         );
 
         const numCols = Number(this.props.numCols);
@@ -21,16 +23,14 @@ class SurveyQuestion extends Component {
         const missingCols = checkboxes.length % numCols;
 
         for (let i = 0; i < missingCols; i++) {
-            checkboxes.push(<Col></Col>);
+            checkboxes.push(<Col key={i}></Col>);
         }
 
         const rows = [];
 
         for (let i = 0; i <= checkboxes.length - (checkboxes.length % numCols); i += numCols) {
-            rows.push(<Row>{checkboxes.slice(i, i + numCols)}</Row>);
+            rows.push(<Row key={i}>{checkboxes.slice(i, i + numCols)}</Row>);
         }
-
-        console.log(numCols);
 
         return rows;
     }
