@@ -2,6 +2,7 @@
 ﻿using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -28,9 +29,11 @@ namespace Cornhacks2019.Engines
             client.Credentials = basicCredential;
             client.Host = "smtp.gmail.com";
 
+            string filePath = "../../../../email/email.html";
+            string body = File.ReadAllText(filePath);
             mail.IsBodyHtml = true;
             mail.Subject = "this is a test email.";
-            mail.Body = "this is my test email body";
+            mail.Body = body;
             client.Send(mail);
         }
 
