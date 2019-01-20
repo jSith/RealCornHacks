@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cornhacks2019.Models;
 using CornHacks2019.Interfaces.EngineInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,10 @@ namespace Cornhacks2019.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetPreferenceOptions()
+        public ActionResult<List<Preference>> GetPreferenceOptions()
         {
-            throw new NotImplementedException();
-
+            var options = _preferenceEngine.GetAllOptions();
+            return options; 
         }
     }
 }
