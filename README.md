@@ -25,3 +25,6 @@ CodeCrowd is not intended to be a one-time message sent, but is meant to be cons
 open-source repositories that can change as a developer's interests and skills change. In order to do this, user data, including their email,
 password, and preferences are saved in a MySQL database to be sent week after week. Emails are built through the MailMessage class and 
 sent via an SmtpClient.
+
+# How to Run
+Inside Visual Studio, select Cornhacks 2019 as the project solution and click IIS Express. 
