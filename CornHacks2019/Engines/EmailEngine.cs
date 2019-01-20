@@ -32,7 +32,7 @@ namespace Cornhacks2019.Engines
             string filePath = "../../../../email/email.html";
             string body = File.ReadAllText(filePath);
             mail.IsBodyHtml = true;
-            mail.Subject = "this is a test email.";
+            mail.Subject = "CodeCrowd Newsletter";
             mail.Body = body;
             client.Send(mail);
         }
