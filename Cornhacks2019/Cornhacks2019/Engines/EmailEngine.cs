@@ -13,10 +13,15 @@ namespace Cornhacks2019.Engines
 {
     public class EmailEngine : IEmailEngine
     {
-        private string _filePath = "../../../../email/email.html";
+        private string _filePath = "../../../email/email.html";
         private string _body = "";
 
-        private IGithubAccessor _githubAccessor;
+        IGithubAccessor _githubAccessor;
+
+        public EmailEngine(IGithubAccessor githubAccessor)
+        {
+            _githubAccessor = githubAccessor;
+        }
 
         public async void SendDigest(User user)
         {
