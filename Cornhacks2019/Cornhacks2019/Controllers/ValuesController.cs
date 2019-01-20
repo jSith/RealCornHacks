@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Cornhacks.Controllers
+namespace Cornhacks2019.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

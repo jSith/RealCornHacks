@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cornhacks", "Cornhacks\Cornhacks.csproj", "{902CEC07-9111-4B01-9E04-6C29180EE4C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cornhacks2019", "Cornhacks2019\Cornhacks2019.csproj", "{844CEC8F-2ED8-4278-908A-4AB12D200004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{902CEC07-9111-4B01-9E04-6C29180EE4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{902CEC07-9111-4B01-9E04-6C29180EE4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{902CEC07-9111-4B01-9E04-6C29180EE4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{902CEC07-9111-4B01-9E04-6C29180EE4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{844CEC8F-2ED8-4278-908A-4AB12D200004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844CEC8F-2ED8-4278-908A-4AB12D200004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844CEC8F-2ED8-4278-908A-4AB12D200004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844CEC8F-2ED8-4278-908A-4AB12D200004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4DD3D8BF-1F93-49B7-BC4F-0516FE313FC4}
+		SolutionGuid = {308404A9-770F-416A-A0DA-D9C27E6F15FC}
 	EndGlobalSection
 EndGlobal
