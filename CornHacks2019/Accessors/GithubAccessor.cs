@@ -2,6 +2,7 @@
 using CornHacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,22 @@ namespace Cornhacks2019.Accessors
                 repo = await response.Content.ReadAsAsync<List<Repository>>();
             }
             return repo; 
+        }
+
+        public async Task<List<string>> GetIssueLabels(Repository repo, int issueId)
+        {
+            string url = $"{_githubUrl}/repositories/{repo.Owner.Login}/{repo.Name}/issues/{issueId}/labels";
+            var response = await _client.GetAsync(url);
+            var labelNames = new List<string>(); 
+
+            if (response.IsSuccessStatusCode)
+            {
+                var gitIssueLabels = await response.Content.ReadAsAsync<List<Label>>();
+                labelNames = gitIssueLabels.Select(x => x.name).ToList(); 
+            }
+
+            return labelNames; 
+
         }
     }
 }
