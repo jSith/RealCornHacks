@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Cornhacks2019.Controllers
 {
-    class UserController
+    public class UserController : Controller
     {
+        
     }
 }

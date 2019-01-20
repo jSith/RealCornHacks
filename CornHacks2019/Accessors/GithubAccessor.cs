@@ -1,4 +1,5 @@
 ﻿using Cornhacks2019.Models;
+using CornHacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cornhacks2019.Accessors
 {
-    class GithubAccessor
+    public class GithubAccessor : IGithubAccessor
     {
         private readonly string _githubUrl = "https://api.github.com";
 
@@ -15,18 +16,19 @@ namespace Cornhacks2019.Accessors
 
         public GithubAccessor()
         {
+            _client.DefaultRequestHeaders.Add("user-agent", "unl"); 
         }
 
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
-            string url = _githubUrl + "/repositories";
+            List<Repository> repo = new List<Repository>(); 
+            string url = _githubUrl + "/repositories?per_page=1000";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                string repo = await response.Content.ReadAsStringAsync();
+                repo = await response.Content.ReadAsAsync<List<Repository>>();
             }
-            return null;
-            //throw new NotImplementedException();
+            return repo; 
         }
     }
 }

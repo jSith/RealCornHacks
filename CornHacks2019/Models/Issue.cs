@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Models
 {
-    class Issue
+    public class Issue
     {
         public string Body { get; set; }
 

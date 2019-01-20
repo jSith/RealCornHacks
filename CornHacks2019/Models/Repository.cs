@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cornhacks2019.Models
 {
-    class Repository
+    public class Repository
     {
         public string Name { get; set; }
 

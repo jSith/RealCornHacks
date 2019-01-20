@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Cornhacks2019.Models
 {
-    class Preference
+    public class Preference
     {
+        public bool IsBeginner { get; set; }
+        public List<string> Topics { get; set; }
+        public List<string> Languages { get; set; }
+        public List<SizeEnum.Size> Sizes { get; set; }
     }
 }
