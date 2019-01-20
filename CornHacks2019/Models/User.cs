@@ -6,5 +6,13 @@ namespace Cornhacks2019.Models
 {
     public class User
     {
+        public string Email { get; set; }
+
+        public Preference Preference { get; set; }
+
+        public string Password { get; set; }
+
+        public bool IsBeginner { get; set; }
+
     }
 }
