@@ -21,32 +21,32 @@ namespace Cornhacks2019.Engines
         {
             List<Repository> finalRepos = new List<Repository>();
 
-            //foreach (Repository repo in repos)
-            //{
-            //    bool descriptionContainsTopic = false;
-            //    foreach (string topic in user.Preference.Topics)
-            //    {
-            //        if (repo.Description.Contains(topic))
-            //        {
-            //            descriptionContainsTopic = true;
-            //        }
-            //    }
+            foreach (Repository repo in repos)
+            {
+                bool descriptionContainsTopic = false;
+                foreach (string topic in user.Preference.Topics)
+                {
+                    if (repo.Description.Contains(topic))
+                    {
+                        descriptionContainsTopic = true;
+                    }
+                }
 
-            //    bool repoSupportsLanguage = false;
-            //    foreach (string language in user.Preference.Languages)
-            //    {
-            //        repo.Languages.ConvertAll(str => str.ToLower());
-            //        if (repo.Languages.Contains(language.ToLower()))
-            //        {
-            //            repoSupportsLanguage = true;
-            //        }
-            //    }
+                bool repoSupportsLanguage = false;
+                foreach (string language in user.Preference.Languages)
+                {
+                    repo.Languages.ConvertAll(str => str.ToLower());
+                    if (repo.Languages.Contains(language.ToLower()))
+                    {
+                        repoSupportsLanguage = true;
+                    }
+                }
 
-            //    if (descriptionContainsTopic && repoSupportsLanguage)
-            //    {
-            //        finalRepos.Add(repo);
-            //    }
-            //}
+                if (descriptionContainsTopic && repoSupportsLanguage)
+                {
+                    finalRepos.Add(repo);
+                }
+            }
             return repos;
         }
 
