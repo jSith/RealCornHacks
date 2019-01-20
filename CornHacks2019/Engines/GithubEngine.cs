@@ -1,13 +1,17 @@
-﻿using Cornhacks2019.Models;
+﻿using Cornhacks2019.Accessors;
+using Cornhacks2019.Models;
 ﻿using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cornhacks2019.Engines
 {
     public class GithubEngine : IGithubEngine
     {
+        GithubAccessor _githubAccessor = new GithubAccessor();
+
         public GithubEngine()
         {
 
@@ -44,6 +48,21 @@ namespace Cornhacks2019.Engines
                 }
             }
             return finalRepos;
+        }
+
+        public async Task<Dictionary<int, KeyValuePair<Repository, Issue>>> CreateRepositoryIssueDictionary(List<Repository> repos)
+        {
+            Dictionary<int, KeyValuePair<Repository, Issue>> dictionary = new Dictionary<int, KeyValuePair<Repository, Issue>>();
+
+            for (int i = 0; i < 5; i++)
+            {            
+                List<Issue> issues = await _githubAccessor.GetIssuesAsync(repos[i]);
+                KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issues[0]);
+
+                dictionary.Add(i, keyValuePair);
+            }
+
+            return dictionary;
         }
     }
 }

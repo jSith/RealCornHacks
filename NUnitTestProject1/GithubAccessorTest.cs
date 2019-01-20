@@ -22,5 +22,17 @@ namespace Tests
             var response = await _githubAccessor.GetPublicRepositoriesAsync();
             Assert.Pass();  
         }
+
+        [Test]
+        public async Task GetIssuesTestAsync()
+        {
+            Repository repo = new Repository();
+            Owner owner = new Owner();
+            owner.Login = "jbhuang0604";
+            repo.Owner = owner;
+            repo.Name = "awesome-computer-vision";
+            var response = await _githubAccessor.GetIssuesAsync(repo);
+            Assert.Pass();
+        }
     }
 }
