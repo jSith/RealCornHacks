@@ -24,7 +24,7 @@ namespace Cornhacks2019.Accessors
             _server = "localhost";
             _database = "Cornhacks";
             _uid = "root";
-            _password = "lHarkendorff13M";
+            _password = "";
             _connectionString = "SERVER=" + _server + ";" + "DATABASE=" +
                 _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";";
         }
