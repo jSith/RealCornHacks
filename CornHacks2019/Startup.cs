@@ -32,7 +32,9 @@ namespace CornHacks2019
             services.AddScoped<IEmailEngine, EmailEngine>();
             services.AddScoped<IGithubEngine, GithubEngine>();
             services.AddScoped<IPreferenceEngine, PreferenceEngine>();
-            services.AddScoped<ISubscriptionEngine, SubscriptionEngine>(); 
+            services.AddScoped<ISubscriptionEngine, SubscriptionEngine>();
+
+            services.AddMvc(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +51,7 @@ namespace CornHacks2019
             }
 
             app.UseStaticFiles();
+            app.UseMvc(); 
 
             app.UseMvc(routes =>
             {
