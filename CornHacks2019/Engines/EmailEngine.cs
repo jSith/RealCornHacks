@@ -1,5 +1,6 @@
 ﻿using Cornhacks2019.Models;
-﻿using CornHacks2019.Interfaces.EngineInterfaces;
+using CornHacks2019.Interfaces.AccessorInterfaces;
+using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,15 @@ namespace Cornhacks2019.Engines
     {
         private string _filePath = "../../../../email/email.html";
         private string _body = "";
+
+        private IGithubAccessor _githubAccessor; 
+
+        public async void SendDigest(User user)
+        {
+            var repos = await _githubAccessor.GetPublicRepositoriesAsync();
+            CreateEmail(repos);
+            SendEmail(user); 
+        }
 
         public void CreateEmail(List<Repository> repos)
         {

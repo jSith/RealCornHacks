@@ -41,6 +41,8 @@ namespace Cornhacks2019.Engines
                     break; 
                 }
 
+                bool containsTopic = false; 
+
                 if (user.Preference == null)
                 {
                     continue; 
@@ -59,32 +61,34 @@ namespace Cornhacks2019.Engines
                             {
                                 continue; 
                             }
-                            if (!repo.Description.Contains(topic))
+                            if (repo.Description.Contains(topic))
                             {
-                                continue;
+                                containsTopic = true; 
                             }
                         }
                     }
                 }
-                /*
+
+
+                var containsLanguage = false; 
                 foreach (string language in user.Preference.Languages)
                 {
                     if (repo.Languages != null)
                     {
-                        if (!repo.Languages.Contains(language))
+                        if (repo.Languages.Contains(language))
                         {
-                            continue;
+                            containsLanguage = true;
                         }
                     }
-                } */
+                } 
 
                 /*
                 var validIssues = new List<Issue>();
                 if (user.Preference.IsBeginner)
                 {
-                    foreach (var issue in issueLabels[repo].Keys)
+                    foreach (var issue in repo.Issues)
                     {
-                        if (issueLabels[repo][issue].Contains("good first issue"))
+                        if (issue.Labels.Contains("good first issue"))
                         {
                             validIssues.Add(issue);
                         }
@@ -93,37 +97,29 @@ namespace Cornhacks2019.Engines
                     {
                         continue;
                     }
-                } */
+                } */ // TODO: figure out encoding
 
-                if (repo.NumberOfContributors == null)
+                var goodContributors = false; 
+
+                var contributors = repo.NumberOfContributors;
+
+                foreach (var size in user.Preference.Sizes)
                 {
-                    continue; 
-                } else
-                {
-                    var contributors = repo.NumberOfContributors;
-                    bool matchedOne = false;
+                    var range = SizeEnum.GetRange(size);
+                    var min = range["min"];
+                    var max = range["max"];
 
-                    foreach (var size in user.Preference.Sizes)
+                    if (contributors >= min && contributors <= max)
                     {
-                        var range = SizeEnum.GetRange(size);
-                        var min = range["min"];
-                        var max = range["max"];
-
-                        if (contributors >= min && contributors <= max)
-                        {
-                            matchedOne = true;
-                        }
-                    }
-
-                    if (!matchedOne)
-                    {
-                        continue;
+                        goodContributors = true;
                     }
                 }
 
-
-
-                finalRepos.Add(repo); 
+                    
+                if (goodContributors && containsTopic && containsLanguage)
+                {
+                    finalRepos.Add(repo);
+                }
             }
 
             if (finalRepos.Count < 5)

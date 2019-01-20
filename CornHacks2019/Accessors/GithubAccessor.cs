@@ -20,6 +20,7 @@ namespace Cornhacks2019.Accessors
         public GithubAccessor()
         {
             _client.DefaultRequestHeaders.Add("user-agent", "unl");
+            _client.DefaultRequestHeaders.Add("Authorization", "Bearer 5bd25a2f722d41ecf150e85b705f94f7c53d961b");
         }
 
         public async Task<List<Issue>> GetIssuesAsync(Repository repo)
@@ -46,20 +47,21 @@ namespace Cornhacks2019.Accessors
                 dbos = await response.Content.ReadAsAsync<List<RepoDBO>>();
             }
 
-
-
             foreach (var dbo in dbos)
             {
                 var cleanUrl = dbo.Issues_Url.Replace("{/number}", ""); 
                 var issues = await GetIssuesAsync(cleanUrl);
+                var languages = await GetLanguagesAsync(dbo.Languages_Url);
+
                 repo.Add(new Repository
                 {
                     Name = dbo.Name,
-                    Description = dbo.Description, 
-                    NumberOfContributors = dbo.NumberOfContributors, 
-                    Issues = issues, 
-                    Url = dbo.Html_Url, 
-                    Owner = dbo.Owner
+                    Description = dbo.Description,
+                    NumberOfContributors = dbo.NumberOfContributors,
+                    Issues = issues,
+                    Url = dbo.Html_Url,
+                    Owner = dbo.Owner,
+                    Languages = languages.Keys.ToList()
                 }); 
             }
             return repo; 
@@ -76,15 +78,15 @@ namespace Cornhacks2019.Accessors
             return issues; 
         }
 
-        public async Task<List<string>> GetLanguagesAsync(string url)
+        public async Task<Dictionary<string, int>> GetLanguagesAsync(string url)
         {
-            var issues = new List<string>();
+            var languages = new Dictionary<string, int>();
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                issues = await response.Content.ReadAsAsync<List<string>>();
+                languages = await response.Content.ReadAsAsync<Dictionary<string, int>>();
             }
-            return issues;
+            return languages;
         }
 
         public async Task<List<string>> GetIssueLabels(Repository repo, int issueId)
