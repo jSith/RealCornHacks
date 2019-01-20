@@ -1,6 +1,6 @@
 ﻿using Cornhacks2019.Accessors;
 using Cornhacks2019.Models;
-using CornHacks2019.Interfaces.EngineInterfaces;
+using Cornhacks2019.Interfaces.EngineInterfaces;
 
 namespace Cornhacks2019.Engines
 {

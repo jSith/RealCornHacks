@@ -1,5 +1,5 @@
 ﻿using Cornhacks2019.Models;
-using CornHacks2019.Interfaces.AccessorInterfaces;
+using Cornhacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

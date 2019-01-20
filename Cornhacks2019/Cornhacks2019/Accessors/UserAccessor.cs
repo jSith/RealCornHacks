@@ -1,6 +1,6 @@
 ﻿using Cornhacks2019.Models;
 using MySql.Data.MySqlClient;
-﻿using CornHacks2019.Interfaces.AccessorInterfaces;
+﻿using Cornhacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
