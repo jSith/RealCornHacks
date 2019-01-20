@@ -115,16 +115,13 @@ namespace Cornhacks2019.Engines
                     }
                 }
 
-                // goodContributors && containsTopic && 
-                // removed because they were too restrictive; may add later if paginate for more results
-
-                if (containsLanguage)
+                if (containsLanguage && goodContributors && containsTopic)
                 {
                     finalRepos.Add(repo);
                 }
             }
 
-            if (finalRepos.Count < 3)
+            if (finalRepos.Count < 4)
             {
                 var padding = repos.Take(3 - finalRepos.Count).ToList();
                 foreach (var item in padding)
