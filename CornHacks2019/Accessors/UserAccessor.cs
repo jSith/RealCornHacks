@@ -34,6 +34,84 @@ namespace Cornhacks2019.Accessors
 
         }
 
+        public User Insert(User user)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = connection.CreateCommand();
+
+                /* Get User table query */
+                cmd.CommandText = 
+                    @"INSERT INTO User (Email, Password, IsBeginner)
+                      VALUES (@Email, @Password, @IsBeginner);";
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@IsBeginner", user.Preference.IsBeginner);
+                int userId = (int)cmd.ExecuteScalar();
+
+                foreach (string language in user.Preference.Languages)
+                {
+                    /* Language table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO Language (LanguageName)
+                          VALUES (@LanguageName);";
+                    cmd.Parameters.AddWithValue("@LanguageName", language);
+                    int languageId = (int)cmd.ExecuteScalar();
+
+                    /* UserLanguage table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserLanguage (UserId, LanguageId)
+                          VALUES (@UserId, @LanguageId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@LanguageId", languageId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                foreach (string topic in user.Preference.Topics)
+                {
+                    /* Topic table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO Topic (TopicName)
+                          VALUES (@TopicName);";
+                    cmd.Parameters.AddWithValue("@TopicName", topic);
+                    int topicId = (int)cmd.ExecuteScalar();
+
+                    /* UserTopic table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserTopic (UserId, TopicId)
+                          VALUES (@UserId, @TopicId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@TopicName", topicId);
+                    cmd.ExecuteNonQuery();
+                }
+                
+                foreach (SizeEnum.Size size in user.Preference.Sizes)
+                {
+                    /* Size table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO Size (SizeName)
+                          VALUES (@SizeName);";
+                    cmd.Parameters.AddWithValue("@SizeName", size);
+                    int sizeId = (int)cmd.ExecuteScalar();
+
+                    /* UserSize table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserSize (UserId, SizeId)
+                          VALUES (@UserId, @SizeId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@SizeId", sizeId);               
+                }
+            }
+            return user;
+        }
+
         public List<User> Select()
         {
             List<User> users = new List<User>();
@@ -102,6 +180,8 @@ namespace Cornhacks2019.Accessors
 
             return cleanedUsers;
         }
+
+
 
     }
 }
