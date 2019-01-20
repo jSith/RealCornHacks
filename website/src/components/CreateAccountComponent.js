@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 
 import Credentials from './CredentialsComponent';
 import Survey from './SurveyComponent';
-import Questions from '../data/SurveyQuestions';
+import { Questions, Sizes, isBeginner as BeginVals } from '../data/SurveyQuestions';
 
 class CreateAccount extends Component {
     constructor(props) {
@@ -17,11 +17,11 @@ class CreateAccount extends Component {
         this.onSubscribe = this.onSubscribe.bind(this);
     }
 
-    onInputChange(question, optionName) {
+    onInputChange(question, optionName, radio = false) {
         this.setState(state => {
             let previousValue = false;
 
-            if (state.survey[question] === undefined) {
+            if (state.survey[question] === undefined || radio) {
                 state.survey[question] = {};
             } else if (state.survey[question][optionName]) {
                 previousValue = true;
@@ -31,8 +31,6 @@ class CreateAccount extends Component {
 
             return state;
         });
-
-        console.log(this.state);
     }
 
     onSubscribe() {
@@ -49,11 +47,26 @@ class CreateAccount extends Component {
 
         const topics = getMultiselect(Questions.topics);
         const languages = getMultiselect(Questions.languages);
-        const sizes = getMultiselect(Questions.size);
 
-        alert("Thank you for subscribing! Check your email for your first newsletter!"
-         + `\nTopics: ${topics}\nLanguages: ${languages}\nSizes: ${sizes}`
-        );
+        const sizes = getMultiselect(Questions.size).map(resp => 
+            Sizes.findIndex(val => val === resp) + 1);
+
+        const beginResp = getMultiselect(Questions.beginner)[0];
+        let isBeginner = undefined;
+        if (beginResp === BeginVals.true) {
+            isBeginner = true;
+        } else if (beginResp === BeginVals.false) { 
+            isBeginner = false;
+        }
+
+        const preference = {
+            topics,
+            languages,
+            sizes,
+            isBeginner
+        };
+
+        alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}`);
     }
 
     render() {
