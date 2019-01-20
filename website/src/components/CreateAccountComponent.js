@@ -4,13 +4,16 @@ import { Button } from 'reactstrap';
 import Credentials from './CredentialsComponent';
 import Survey from './SurveyComponent';
 import { Questions, Sizes, isBeginner as BeginVals } from '../data/SurveyQuestions';
+import CredentialFields from '../data/CredentialFields';
 
 class CreateAccount extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            survey: {}
+            survey: {},
+            emailValid: true,
+            passValid: true
         };
 
         this.onCredentialInputChange = this.onCredentialInputChange.bind(this);
@@ -20,9 +23,11 @@ class CreateAccount extends Component {
     }
 
     onCredentialInputChange(field, value) {
-        this.setState({
-            [field]: value
-        });
+        this.setState({ [field]: value });
+
+        if (field === CredentialFields.email) {
+            this.setState({ emailValid: true });
+        }
     }
 
     onSurveyInputChange(question, optionName, radio = false) {
@@ -80,14 +85,26 @@ class CreateAccount extends Component {
         const password = this.state.password;
         const preference = this.getPreferences();
 
-        alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
+        if (email === undefined) {
+            alert("Please enter a valid email address.");
+            this.setState({ emailValid: false });
+        } else if (password === undefined) {
+            alert("Please enter a password.");
+            this.setState({ passValid: false });
+        } else if (password !== this.state.confirmPassword) {
+            alert("Passwords do not match.");
+            this.setState({ passValid: false });
+        } else {
+            this.setState({ emailValid: true, passValid: true });
+            alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
+        }
     }
 
     render() {
         return (
             <div id="createAccount">
                 <h1 id="createHeader">Explore new repositories</h1>
-                <Credentials onInputChange={this.onCredentialInputChange}/>
+                <Credentials onInputChange={this.onCredentialInputChange} emailValid={this.state.emailValid} passValid={this.state.passValid}/>
                 <Survey onInputChange={this.onSurveyInputChange}/>
                 <Button id="subscribeButton" color="primary" size = 'lg' onClick={this.onSubscribe}>Subscribe</Button>
             </div>

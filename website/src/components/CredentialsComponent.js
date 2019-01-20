@@ -12,6 +12,7 @@ class Credentials extends Component {
                         <Label for="email" className="credentials-label"><strong>Email</strong></Label>
                         <Input type="email" className="credentials-input" name="email" id="email" placeholder="example@email.com" 
                             onChange={(event) => this.props.onInputChange(Fields.email, event.target.value)}
+                            invalid={!this.props.emailValid}
                         />
                     </FormGroup>
                     
@@ -19,12 +20,14 @@ class Credentials extends Component {
                         <Label for= "password" className="credentials-label"><strong>Password</strong></Label>
                         <Input type="password" className="credentials-input" name="password" id="password" 
                             onChange={(event) => this.props.onInputChange(Fields.password, event.target.value)}
+                            invalid={!this.props.passValid}
                         />
                     </FormGroup>
                     <FormGroup>
                         <Label for="confirmPassword" className="credentials-label"><strong>Confirm password</strong></Label>
                         <Input type="password" className="credentials-input" name="confirmPassword" id="confirmPassword"
                             onChange={(event) => this.props.onInputChange(Fields.confirmPassword, event.target.value)}
+                            invalid={!this.props.passValid}
                         />
                     </FormGroup>
                 </Form>
