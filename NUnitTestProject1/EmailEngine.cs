@@ -15,6 +15,7 @@ namespace NUnitTestProject1
         {
             EmailEngine ee = new EmailEngine();
             User user = new User();
+            user.Email = "jharkendorff@gmail.com";
             ee.SendEmail(user);
         }
 

@@ -18,7 +18,7 @@ namespace Cornhacks2019.Engines
         public void SendEmail(User user)
         {            
             var basicCredential = new NetworkCredential("cornhacksteamtwo@gmail.com", "testingpass1");
-            MailMessage mail = new MailMessage("cornhacksteamtwo@gmail.com", "jharkendorff@gmail.com");
+            MailMessage mail = new MailMessage("cornhacksteamtwo@gmail.com", user.Email);
             SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.EnableSsl = true;
