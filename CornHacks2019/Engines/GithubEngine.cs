@@ -18,56 +18,24 @@ namespace Cornhacks2019.Engines
             _githubAccessor = githubAccessor;
         }
 
-        public async Task<SortedDictionary<Repository, Issue>> GetValidIssues(User user)
+        public async Task<List<Repository>> GetValidIssues(User user)
         {
-            var allRepoIssues = await GetRepoIssues();
-            var validRepoIssues = FilterRepositories(user, allRepoIssues);
+            // var allRepoIssues = await GetRepoIssues();
+            var repos = await _githubAccessor.GetPublicRepositoriesAsync(); 
+            var validRepoIssues = FilterRepositories(user, repos);
             return validRepoIssues; 
         }
 
-        private SortedDictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
+        private List<Repository> FilterRepositories(User user, List<Repository> repos)
         {
             SortedDictionary<Repository, Issue> finalRepos = new SortedDictionary<Repository, Issue>();
+            List<Repository> finrep = new List<Repository>(); 
 
-            foreach (Repository repo in issueLabels.Keys)
+            foreach (Repository repo in repos)
             {
-                if (finalRepos.Keys.Count >= 5)
+                if (finrep.Count == 5)
                 {
                     break; 
-                }
-
-                foreach (string topic in user.Preference.Topics)
-                {
-                    if (!repo.Description.Contains(topic))
-                    {
-                        continue;
-                    }
-                }
-
-                foreach (string language in user.Preference.Languages)
-                {
-                    repo.Languages.ConvertAll(str => str.ToLower());
-                    if (!repo.Languages.Contains(language.ToLower()))
-                    {
-                        continue;
-                    }
-                }
-
-
-                var validIssues = new List<Issue>();
-                if (user.Preference.IsBeginner)
-                {
-                    foreach (var issue in issueLabels[repo].Keys)
-                    {
-                        if (issueLabels[repo][issue].Contains("good first issue"))
-                        {
-                            validIssues.Add(issue);
-                        }
-                    }
-                    if (validIssues.Count == 0)
-                    {
-                        continue;
-                    }
                 }
 
                 var contributors = repo.NumberOfContributors;
@@ -90,10 +58,15 @@ namespace Cornhacks2019.Engines
                     continue;
                 }
 
-                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First();
+                finrep.Add(repo); 
             }
 
-            return finalRepos;
+            if (finrep.Count < 6)
+            {
+                var diff = 6 - finrep.Count;
+                finrep = repos.Take(6).ToList(); 
+            }
+            return finrep; 
         }
 
 
