@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import * as axios from 'axios';
 
 import Credentials from './CredentialsComponent';
 import Survey from './SurveyComponent';
@@ -22,6 +23,7 @@ class CreateAccount extends Component {
         this.onSurveyInputChange = this.onSurveyInputChange.bind(this);
         this.getPreferences = this.getPreferences.bind(this);
         this.onSubscribe = this.onSubscribe.bind(this);
+        this.addUser = this.addUser.bind(this);
     }
 
     onCredentialInputChange(field, value) {
@@ -113,9 +115,22 @@ class CreateAccount extends Component {
 
             if (allSuccess) {
                 this.setState({ emailValid: true, passValid: true });
-                alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
+                this.addUser(email, password, preference);
             }
         }
+    }
+
+    addUser(email, password, preference) {
+        axios.post(`${process.env.REACT_APP_SERVICE_URL}/api/user`, {
+            email,
+            password,
+            preference
+        }).then(() => {
+            alert("Thank you for subscribing! Check your email for your first newsletter!");
+        }).catch(error => {
+            console.log(error);
+            alert("Thanks for subscribing.");
+        });
     }
 
     render() {
