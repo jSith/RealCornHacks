@@ -30,7 +30,8 @@ namespace Cornhacks2019.Engines
                 bool repoSupportsLanguage = false;
                 foreach (string language in user.Preference.Languages)
                 {
-                    if (repo.Languages.Contains(language))
+                    repo.Languages.ConvertAll(str => str.ToLower());
+                    if (repo.Languages.Contains(language.ToLower()))
                     {
                         repoSupportsLanguage = true;
                     }
