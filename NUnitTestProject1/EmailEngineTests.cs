@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Cornhacks2019.Accessors;
 using Cornhacks2019.Engines;
 using Cornhacks2019.Models;
 using NUnit;
@@ -9,7 +10,11 @@ using NUnit.Framework;
 namespace NUnitTestProject1
 {
     public class EmailEngineTests
-    { 
+    {
+        GithubAccessor _githubAccessor = new GithubAccessor();
+        GithubEngine _githubEngine = new GithubEngine();
+        EmailEngine _emailEngine = new EmailEngine();
+
         [Test]
         public void TestEmailEngine()
         {
@@ -20,9 +25,16 @@ namespace NUnitTestProject1
         }
 
         [Test]
-        public void SendFullEmail()
+        public async void SendFullEmail()
         {
+            User user = new User();
+            user.Email = "jharkendorff@gmail.com";
 
+            var repositories = await _githubAccessor.GetPublicRepositoriesAsync();
+            //repositories = _githubEngine.FilterRepositories(repositories, user);
+            var dic = await _githubEngine.CreateRepositoryIssueDictionary(repositories);
+            _emailEngine.CreateEmail(dic);
+            _emailEngine.SendEmail(user);
         }
 
     }

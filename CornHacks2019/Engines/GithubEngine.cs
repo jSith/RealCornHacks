@@ -54,7 +54,7 @@ namespace Cornhacks2019.Engines
         {
             Dictionary<int, KeyValuePair<Repository, Issue>> dictionary = new Dictionary<int, KeyValuePair<Repository, Issue>>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {            
                 List<Issue> issues = await _githubAccessor.GetIssuesAsync(repos[i]);
                 KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issues[0]);
