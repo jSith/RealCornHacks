@@ -2,6 +2,7 @@
 ﻿using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -10,11 +11,13 @@ namespace Cornhacks2019.Engines
 {
     public class EmailEngine : IEmailEngine
     {
-        public void CreateEmail(Dictionary<Repository, List<Issue>> dictionary)
+        private string _filePath = "../../../../email/email.html";
+        private string _body = "";
+
+        public void CreateEmail(Dictionary<int, KeyValuePair<Repository, Issue>> dictionary)
         {
-
+            _body = File.ReadAllText(_filePath);            
         }
-
         
         public void SendEmail(User user)
         {            
@@ -27,10 +30,12 @@ namespace Cornhacks2019.Engines
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential;
             client.Host = "smtp.gmail.com";
-
+            
             mail.IsBodyHtml = true;
-            mail.Subject = "this is a test email.";
-            mail.Body = "this is my test email body";
+
+            mail.Subject = "CodeCrowd Newsletter";
+            mail.Body = _body;
+
             client.Send(mail);
         }
 
