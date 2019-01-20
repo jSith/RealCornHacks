@@ -21,12 +21,15 @@ class Survey extends Component {
         let topics = TOPICS;
         let languages = LANGUAGES;
 
-        axios.get(`${process.env.REACT_APP_SERVICE_URL}/api/preferences`).then(data => {
-            if (data.Topics !== undefined) {
-                topics = data.Topics;
+        axios.get(`${process.env.REACT_APP_SERVICE_URL}/api/preferences`).then(payload => {
+            const data = payload.data;
+            console.log(data);
+
+            if (data.topics !== undefined) {
+                topics = data.topics;
             }
-            if (data.Lanuages !== undefined) {
-                languages = data.Languages;
+            if (data.languages !== undefined) {
+                languages = data.languages;
             }
         }).catch(error => {
             console.log(error);
