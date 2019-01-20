@@ -3,6 +3,7 @@ using Cornhacks2019.Models;
 ﻿using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,68 +11,110 @@ namespace Cornhacks2019.Engines
 {
     public class GithubEngine : IGithubEngine
     {
-        GithubAccessor _githubAccessor = new GithubAccessor();
+        GithubAccessor _githubAccessor;
 
-        public GithubEngine()
+        public GithubEngine(GithubAccessor githubAccessor)
         {
-
+            _githubAccessor = githubAccessor;
         }
 
-        public List<Repository> FilterRepositories(List<Repository> repos, User user)
+        public async Task<Dictionary<Repository, Issue>> GetValidIssues(User user)
         {
-            List<Repository> finalRepos = new List<Repository>();
+            var allRepoIssues = await GetRepoIssues();
+            var validRepoIssues = FilterRepositories(user, allRepoIssues);
+            return validRepoIssues; 
+        }
 
-            foreach (Repository repo in repos)
+        private Dictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
+        {
+            Dictionary<Repository, Issue> finalRepos = new Dictionary<Repository, Issue>();
+
+            foreach (Repository repo in issueLabels.Keys)
             {
-                bool descriptionContainsTopic = false;
+                if (finalRepos.Keys.Count >= 5)
+                {
+                    break; 
+                }
+
                 foreach (string topic in user.Preference.Topics)
                 {
-                    if (repo.Description.Contains(topic))
+                    if (!repo.Description.Contains(topic))
                     {
-                        descriptionContainsTopic = true;
+                        continue;
                     }
                 }
 
-                bool repoSupportsLanguage = false;
                 foreach (string language in user.Preference.Languages)
                 {
                     repo.Languages.ConvertAll(str => str.ToLower());
-                    if (repo.Languages.Contains(language.ToLower()))
+                    if (!repo.Languages.Contains(language.ToLower()))
                     {
-                        repoSupportsLanguage = true;
+                        continue;
                     }
                 }
 
-                if (descriptionContainsTopic && repoSupportsLanguage)
+
+                var validIssues = new List<Issue>();
+                if (user.Preference.IsBeginner)
                 {
-                    finalRepos.Add(repo);
+                    foreach (var issue in issueLabels[repo].Keys)
+                    {
+                        if (issueLabels[repo][issue].Contains("good first issue"))
+                        {
+                            validIssues.Add(issue);
+                        }
+                    }
+                    if (validIssues.Count == 0)
+                    {
+                        continue;
+                    }
                 }
+
+                var contributors = repo.NumberOfContributors;
+                bool matchedOne = false;
+
+                foreach (var size in user.Preference.Sizes)
+                {
+                    var range = SizeEnum.GetRange(size);
+                    var min = range["min"];
+                    var max = range["max"];
+
+                    if (contributors > min && contributors < max)
+                    {
+                        matchedOne = true;
+                    }
+                }
+
+                if (!matchedOne)
+                {
+                    continue;
+                }
+
+                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First();
             }
-            return repos;
+
+            return finalRepos;
         }
 
-        public async Task<Dictionary<int, KeyValuePair<Repository, Issue>>> CreateRepositoryIssueDictionary(List<Repository> repos)
+
+        private async Task<Dictionary<Repository, Dictionary<Issue, List<string>>>> GetRepoIssues()
         {
-            Dictionary<int, KeyValuePair<Repository, Issue>> dictionary = new Dictionary<int, KeyValuePair<Repository, Issue>>();
+            var repos = await _githubAccessor.GetPublicRepositoriesAsync(); 
+            var dict = new Dictionary<Repository, Dictionary<Issue, List<string>>>(); 
 
-            for (int i = 0; i < 6; i++)
-            {            
-                List<Issue> issues = await _githubAccessor.GetIssuesAsync(repos[i]);
-                Issue issue = new Issue();
-                if (issues.Count == 0)
-                {
-                    issue.Title = "No issue";
-                }
-                else
-                {
-                    issue = issues[0];
-                }
-                KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issue);
+            foreach (var repo in repos)
+            {
+                var issues = await _githubAccessor.GetIssuesAsync(repo); 
+                var smallerDict = new Dictionary<Issue, List<string>>(); 
 
-                dictionary.Add(i, keyValuePair);
+                foreach (var issue in issues)
+                {
+                    var labels = await _githubAccessor.GetIssueLabels(repo, issue.Id);
+                    smallerDict[issue] = labels; 
+                }
+                dict[repo] = smallerDict; 
             }
-
-            return dictionary;
+            return dict; 
         }
     }
 }
