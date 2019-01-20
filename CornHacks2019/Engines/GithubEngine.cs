@@ -31,11 +31,16 @@ namespace Cornhacks2019.Engines
 
             foreach (Repository repo in issueLabels.Keys)
             {
+                if (finalRepos.Keys.Count >= 5)
+                {
+                    break; 
+                }
+
                 foreach (string topic in user.Preference.Topics)
                 {
                     if (!repo.Description.Contains(topic))
                     {
-                        continue; 
+                        continue;
                     }
                 }
 
@@ -44,7 +49,7 @@ namespace Cornhacks2019.Engines
                     repo.Languages.ConvertAll(str => str.ToLower());
                     if (!repo.Languages.Contains(language.ToLower()))
                     {
-                        continue; 
+                        continue;
                     }
                 }
 
@@ -56,36 +61,36 @@ namespace Cornhacks2019.Engines
                     {
                         if (issueLabels[repo][issue].Contains("good first issue"))
                         {
-                            validIssues.Add(issue); 
+                            validIssues.Add(issue);
                         }
                     }
                     if (validIssues.Count == 0)
                     {
-                        continue; 
+                        continue;
                     }
                 }
 
                 var contributors = repo.NumberOfContributors;
-                bool matchedOne = false; 
+                bool matchedOne = false;
 
                 foreach (var size in user.Preference.Sizes)
                 {
                     var range = SizeEnum.GetRange(size);
                     var min = range["min"];
-                    var max = range["max"]; 
+                    var max = range["max"];
 
                     if (contributors > min && contributors < max)
                     {
-                        matchedOne = true; 
+                        matchedOne = true;
                     }
                 }
 
                 if (!matchedOne)
                 {
-                    continue; 
+                    continue;
                 }
 
-                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First(); 
+                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First();
             }
 
             return finalRepos;
