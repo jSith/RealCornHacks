@@ -20,7 +20,91 @@ namespace Cornhacks2019.Accessors
         public UserAccessor(IConfiguration config)
         {
             _config = config;
-            _connectionString = _config.GetSection("Database:ConnectionString").Value; 
+            _connectionString = _config.GetSection("Database:ConnectionString").Value;
+        }
+
+        public User Insert(User user)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = connection.CreateCommand();
+
+                /* Get User table query */
+                cmd.CommandText =
+                    @"INSERT INTO User (Email, Password, IsBeginner)
+                      VALUES (@Email, @Password, @IsBeginner);";
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@IsBeginner", user.Preference.IsBeginner);
+
+                cmd.CommandText = @"SELECT UserId FROM User
+                    WHERE Email = @Email"; 
+
+                int userId = (int)cmd.ExecuteScalar();
+
+                foreach (string language in user.Preference.Languages)
+                {
+                    /* Language table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"SELECT LanguageId FROM Language
+                            WHERE LanguageName = @LanguageName;";
+                    cmd.Parameters.AddWithValue("@LanguageName", language);
+                    int languageId = (int)cmd.ExecuteScalar();
+
+                    /* UserLanguage table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserLanguage (UserId, LanguageId)
+                          VALUES (@UserId, @LanguageId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@LanguageId", languageId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                foreach (string topic in user.Preference.Topics)
+                {
+                    /* Topic table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"SELECT TopicId FROM Topic
+                          WHERE TopicName = @TopicName;";
+                    cmd.Parameters.AddWithValue("@TopicName", topic);
+                    int topicId = (int)cmd.ExecuteScalar();
+
+                    /* UserTopic table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserTopic (UserId, TopicId)
+                          VALUES (@UserId, @TopicId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@TopicName", topicId);
+                    cmd.ExecuteNonQuery();
+                }
+                
+                foreach (SizeEnum.Size size in user.Preference.Sizes)
+                {
+                    /* Size table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"SELECT SizeId FROM Size
+                            WHERE SizeName = @SizeName;";
+                    cmd.Parameters.AddWithValue("@SizeName", size);
+                    int sizeId = (int)cmd.ExecuteScalar();
+
+                    /* UserSize table query */
+                    cmd.Parameters.Clear();
+                    cmd.CommandText =
+                        @"INSERT INTO UserSize (UserId, SizeId)
+                          VALUES (@UserId, @SizeId);";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@SizeId", sizeId);               
+                }
+            }
+            return user;
+
+
         }
 
         public List<User> Select()
@@ -90,6 +174,33 @@ namespace Cornhacks2019.Accessors
             }
 
             return cleanedUsers;
+        }
+
+        public User Delete (User user)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                MySqlCommand cmd = connection.CreateCommand();
+
+                cmd.CommandText = "SELECT UserId FROM User WHERE Email = @Email";
+                cmd.Parameters.AddWithValue("@Email", user.Email); 
+
+                int userId = (int)cmd.ExecuteScalar();
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                cmd.CommandText = "DELETE FROM UserLanguage WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery(); 
+
+                cmd.CommandText = "DELETE FROM UserTopic WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery(); 
+
+                cmd.CommandText = "DELETE FROM UserSize WHERE UserId = @UserId";
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "DELETE FROM User WHERE UserId = @UserId"; 
+            }
+            return user;
         }
 
     }
