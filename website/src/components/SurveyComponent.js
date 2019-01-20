@@ -43,10 +43,10 @@ class Survey extends Component {
     render() {
         return this.state.isLoaded ? (
             <div className="survey">
-                <SurveyQuestion key="1" question = "What topics do you want to explore?" options={this.state.topics} numCols="3"/>
-                <SurveyQuestion key="2" question = "What languages do you want to use?" options={this.state.languages} numCols="3"/>
-                <SurveyQuestion key="3" question = "How many contributors are you looking to work with?" options={SIZES} numCols="3"/>
-                <SurveyQuestion key="4" question = "Are you new to open source dvelopment?" options={BEGINNER_RESPONSES} numCols="2"/>
+                <SurveyQuestion key="1" question="What topics do you want to explore?" options={this.state.topics} numCols="3"/>
+                <SurveyQuestion key="2" question="What languages do you want to use?" options={this.state.languages} numCols="3"/>
+                <SurveyQuestion key="3" question="How many contributors are you looking to work with?" options={SIZES} numCols="3"/>
+                <SurveyQuestion key="4" question="Are you new to open source development?" options={BEGINNER_RESPONSES} numCols="2" radio/>
             </div>
         ) : <div></div>;
     }
