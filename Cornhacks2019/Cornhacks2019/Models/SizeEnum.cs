@@ -58,5 +58,21 @@ namespace Cornhacks2019.Models
 
             return dict; 
         }
+
+        public static string ToString(Size size)
+        {
+            if (size == Size.Small)
+            {
+                return "Small";
+            }
+            else if (size == Size.Medium)
+            {
+                return "Medium";
+            }
+            else
+            {
+                return "Large";
+            }
+        }
     }
 }

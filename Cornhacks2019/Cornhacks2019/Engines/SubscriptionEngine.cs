@@ -1,14 +1,14 @@
-﻿using Cornhacks2019.Accessors;
-using Cornhacks2019.Models;
+﻿using Cornhacks2019.Models;
 using Cornhacks2019.Interfaces.EngineInterfaces;
+using Cornhacks2019.Interfaces.AccessorInterfaces;
 
 namespace Cornhacks2019.Engines
 {
     public class SubscriptionEngine : ISubscriptionEngine
     {
-        private UserAccessor _userAccessor; 
+        private IUserAccessor _userAccessor; 
 
-        public SubscriptionEngine(UserAccessor userAccessor)
+        public SubscriptionEngine(IUserAccessor userAccessor)
         {
             _userAccessor = userAccessor; 
         }
