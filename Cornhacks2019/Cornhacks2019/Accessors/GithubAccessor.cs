@@ -1,4 +1,4 @@
-﻿using Cornhacks2019.Models;
+using Cornhacks2019.Models;
 using Cornhacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
