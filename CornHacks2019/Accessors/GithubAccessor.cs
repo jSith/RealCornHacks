@@ -19,6 +19,18 @@ namespace Cornhacks2019.Accessors
             _client.DefaultRequestHeaders.Add("user-agent", "unl"); 
         }
 
+        public async Task<List<Issue>> GetIssuesAsync(Repository repo)
+        {
+            List<Issue> issues = new List<Issue>();
+            string url = _githubUrl + "/repos/" + repo.Owner.Login + "/" + repo.Name + "/issues";
+            HttpResponseMessage response = await _client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                issues = await response.Content.ReadAsAsync<List<Issue>>();
+            }
+            return issues;
+        }
+
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
             List<Repository> repo = new List<Repository>(); 

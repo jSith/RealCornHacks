@@ -11,11 +11,13 @@ namespace Cornhacks2019.Engines
 {
     public class EmailEngine : IEmailEngine
     {
-        public void CreateEmail(Dictionary<Repository, List<Issue>> dictionary)
+        private string _filePath = "../../../../email/email.html";
+        private string _body = "";
+
+        public void CreateEmail(Dictionary<int, KeyValuePair<Repository, Issue>> dictionary)
         {
-
+            _body = File.ReadAllText(_filePath);            
         }
-
         
         public void SendEmail(User user)
         {            
@@ -28,12 +30,12 @@ namespace Cornhacks2019.Engines
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential;
             client.Host = "smtp.gmail.com";
-
-            string filePath = "../../../../email/email.html";
-            string body = File.ReadAllText(filePath);
+            
             mail.IsBodyHtml = true;
+
             mail.Subject = "CodeCrowd Newsletter";
-            mail.Body = body;
+            mail.Body = _body;
+
             client.Send(mail);
         }
 
