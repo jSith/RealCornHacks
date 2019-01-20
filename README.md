@@ -1,12 +1,18 @@
 # CodeCrowd
 Codehacks 2019
+
 January 19-20
+
 Authors: Joe Cowman, Sam Futterman, John Harkendorff, and Jessica Smith
 
+
 CodeCrowd is an email notification software to help pair programmers with open-source repositories that meet their skill-level and interests.
+
 By signing up with their email, individuals can choose their proficient languages, decide their technical topics of interest, tell their
 overall experience with open-source software, and choose the size of team they like to work with.
+
 All of these factors are taken into consideration to introduce software developers to repositories that perfectly match their interest.
+
 Each week, an automated email is sent to the user with a list of 5 of the best-matching repositories that we believe the user will
 most enjoy working on.
 
