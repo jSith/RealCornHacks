@@ -45,9 +45,9 @@ body {
 }
 
 #emailImage {
-    height: 460px;
-    width: 400px;
+    height: 420px;
+    width: 560px;
     position: absolute;
-    left: 690px;
-    top: 70px;
+    left: 600px;
+    top: 80px;
 }

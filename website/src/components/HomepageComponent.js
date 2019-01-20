@@ -24,7 +24,7 @@ class Homepage extends Component {
                 For more information, contact us at <a href="mailto: email@address.com">email@address.com</a>.
             </div>
 
-            <img id="emailImage" src="http://thumbnails-visually.netdna-ssl.com/the-email-marketing-process_50290ce6efbd4_w1500.jpg" ></img>
+            <img id="emailImage" src="https://conversionmarketing.org/wp-content/uploads/2018/04/Email-Campaign.png" ></img>
         </div>
         );
     }
