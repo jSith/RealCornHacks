@@ -50,14 +50,16 @@ namespace Cornhacks2019.Engines
             return finalRepos;
         }
 
-        public async Task<Dictionary<Repository, List<Issue>>> CreateRepositoryIssueDictionary(List<Repository> repos)
+        public async Task<Dictionary<int, KeyValuePair<Repository, Issue>>> CreateRepositoryIssueDictionary(List<Repository> repos)
         {
-            Dictionary<Repository, List<Issue>> dictionary = new Dictionary<Repository, List<Issue>>();
+            Dictionary<int, KeyValuePair<Repository, Issue>> dictionary = new Dictionary<int, KeyValuePair<Repository, Issue>>();
 
-            foreach (Repository repo in repos)
-            {
-                List<Issue> issues = await _githubAccessor.GetIssuesAsync(repo);
-                dictionary.Add(repo, issues);
+            for (int i = 0; i < 5; i++)
+            {            
+                List<Issue> issues = await _githubAccessor.GetIssuesAsync(repos[i]);
+                KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issues[0]);
+
+                dictionary.Add(i, keyValuePair);
             }
 
             return dictionary;

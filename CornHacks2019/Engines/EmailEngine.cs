@@ -14,11 +14,10 @@ namespace Cornhacks2019.Engines
         private string _filePath = "../../../../email/email.html";
         private string _body = "";
 
-        public void CreateEmail(Dictionary<Repository, List<Issue>> dictionary)
+        public void CreateEmail(Dictionary<int, KeyValuePair<Repository, Issue>> dictionary)
         {
-            _body = File.ReadAllText(_filePath);
+            _body = File.ReadAllText(_filePath);            
         }
-
         
         public void SendEmail(User user)
         {            
