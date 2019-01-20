@@ -16,7 +16,14 @@ class SurveyQuestion extends Component {
 
         const checkboxes = this.props.options.map(name => 
             <Col className="option" key={"col" + name}>
-                <CustomInput type={inputType} id={name} name={this.props.question} key={"box" + name} label={name} />
+                <CustomInput 
+                    type={inputType} 
+                    id={name} 
+                    name={this.props.question} 
+                    key={"box" + name} 
+                    label={name}
+                    onChange={() => this.props.onChange(this.props.question, name)}
+                />
             </Col>
         );
 
