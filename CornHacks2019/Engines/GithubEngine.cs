@@ -124,7 +124,11 @@ namespace Cornhacks2019.Engines
 
             if (finalRepos.Count < 5)
             {
-                finalRepos = repos.Take(5).ToList(); 
+                var padding = repos.Take(5 - finalRepos.Count).ToList();
+                foreach (var item in padding)
+                {
+                    finalRepos.Add(item); 
+                }
             }
 
             return finalRepos; 

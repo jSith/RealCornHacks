@@ -20,7 +20,6 @@ namespace Cornhacks2019.Accessors
         public GithubAccessor()
         {
             _client.DefaultRequestHeaders.Add("user-agent", "unl");
-            _client.DefaultRequestHeaders.Add("Authorization", "Bearer 5bd25a2f722d41ecf150e85b705f94f7c53d961b");
         }
 
         public async Task<List<Issue>> GetIssuesAsync(Repository repo)
@@ -40,7 +39,7 @@ namespace Cornhacks2019.Accessors
             var dbos = new List<RepoDBO>(); 
 
             List<Repository> repo = new List<Repository>(); 
-            string url = _githubUrl + "/repositories";
+            string url = _githubUrl + "/repositories?per_page=200";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
