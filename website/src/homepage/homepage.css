@@ -1,0 +1,40 @@
+body {
+    background-image: url("http://okanaganofficesystems.com/wp-content/uploads/2016/03/white-background.jpg");
+    background-repeat: no-repeat; 
+    background-size: cover;
+  }
+
+#header {
+    margin: auto;
+    border-radius: 10px;
+    height: 200px;
+    width: 500px;
+    position: absolute;
+    left: 60px;
+    top: 40px;
+}
+
+#headerStatement {
+    font-size: 2.5em;
+}
+
+#benefitList {
+    font-size: 1.5em;
+    color: black;
+    fill: black;
+    line-height: 200%;
+    align-content: center;
+}
+
+#subscribeButton {
+}
+
+#businessTextBox {
+    margin: auto;
+    border-radius: 10px;
+    height: 150px;
+    width: 430px;
+    position: absolute;
+    left: 60px;
+    top: 550px;
+}
