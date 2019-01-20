@@ -57,7 +57,16 @@ namespace Cornhacks2019.Engines
             for (int i = 0; i < 6; i++)
             {            
                 List<Issue> issues = await _githubAccessor.GetIssuesAsync(repos[i]);
-                KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issues[0]);
+                Issue issue = new Issue();
+                if (issues.Count == 0)
+                {
+                    issue.Title = "No issue";
+                }
+                else
+                {
+                    issue = issues[0];
+                }
+                KeyValuePair<Repository, Issue> keyValuePair = new KeyValuePair<Repository, Issue>(repos[i], issue);
 
                 dictionary.Add(i, keyValuePair);
             }

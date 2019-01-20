@@ -34,7 +34,7 @@ namespace Cornhacks2019.Accessors
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
             List<Repository> repo = new List<Repository>(); 
-            string url = _githubUrl + "/repositories?per_page=1000";
+            string url = _githubUrl + "/repositories";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
