@@ -13,11 +13,19 @@ class CreateAccount extends Component {
             survey: {}
         };
 
-        this.onInputChange = this.onInputChange.bind(this);
+        this.onCredentialInputChange = this.onCredentialInputChange.bind(this);
+        this.onSurveyInputChange = this.onSurveyInputChange.bind(this);
+        this.getPreferences = this.getPreferences.bind(this);
         this.onSubscribe = this.onSubscribe.bind(this);
     }
 
-    onInputChange(question, optionName, radio = false) {
+    onCredentialInputChange(field, value) {
+        this.setState({
+            [field]: value
+        });
+    }
+
+    onSurveyInputChange(question, optionName, radio = false) {
         this.setState(state => {
             let previousValue = false;
 
@@ -33,7 +41,7 @@ class CreateAccount extends Component {
         });
     }
 
-    onSubscribe() {
+    getPreferences() {
         const getMultiselect = (question) => {
             let result = [];
             const ref = this.state.survey[question];
@@ -59,22 +67,28 @@ class CreateAccount extends Component {
             isBeginner = false;
         }
 
-        const preference = {
+        return {
             topics,
             languages,
             sizes,
             isBeginner
         };
+    }
 
-        alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}`);
+    onSubscribe() {
+        const email = this.state.email;
+        const password = this.state.password;
+        const preference = this.getPreferences();
+
+        alert(`Thank you for subscribing! Check your email for your first newsletter!\n${JSON.stringify(preference)}\n${email}|${password}`);
     }
 
     render() {
         return (
             <div id="createAccount">
                 <h1 id="createHeader">Explore new repositories</h1>
-                <Credentials />
-                <Survey onInputChange={this.onInputChange}/>
+                <Credentials onInputChange={this.onCredentialInputChange}/>
+                <Survey onInputChange={this.onSurveyInputChange}/>
                 <Button id="subscribeButton" color="primary" size = 'lg' onClick={this.onSubscribe}>Subscribe</Button>
             </div>
         )
