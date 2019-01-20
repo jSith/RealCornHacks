@@ -25,18 +25,21 @@ namespace Tests
             User user = new User();
             user.Email = "email@gmail.com";
             user.Password = "password123";
-            user.Preference.IsBeginner = true;
-            user.Preference.Languages = new List<string>()
-            {
-                "Python",
-                "C#",
-                "Ruby"
-            };
-            user.Preference.Topics = new List<string>()
-            {
-                "Machine Learning",
-                "Database"
-            };
+            user.Preference = new Preference {
+                IsBeginner = true,
+                Languages = new List<string>()
+                {
+                    "Python",
+                    "C#",
+                    "Ruby"
+                },
+                Topics = new List<string>()
+                {
+                    "Machine Learning",
+                    "Database"
+                }
+            }; 
+;
             user.Preference.Sizes = new List<SizeEnum.Size>()
             {
                 SizeEnum.Size.Medium
