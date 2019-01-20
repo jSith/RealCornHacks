@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -14,61 +15,63 @@ namespace Cornhacks2019.Engines
         private string _filePath = "../../../../email/email.html";
         private string _body = "";
 
-        public void CreateEmail(Dictionary<int, KeyValuePair<Repository, Issue>> dictionary)
+        public void CreateEmail(SortedDictionary<Repository, Issue> dictionary)
         {
             _body = File.ReadAllText(_filePath);
-            
-            for (int i = 0; i < 6; i++)
+            var keys = dictionary.Keys.ToList(); 
+
+            for (int i = 0; i < 4; i++)
             {
-                var pair = dictionary.GetValueOrDefault(i);
+                var repo = keys[i];
+                var issue = dictionary[repo]; 
                 switch (i)
                 {                    
                     case 0:
-                        _body = _body.Replace("[RepoAvatar0]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle0]", pair.Key.Name);
-                        _body = _body.Replace("[RepoUrl0]", pair.Key.Url);
-                        _body = _body.Replace("[RepoDescription0]", pair.Key.Description);
-                        _body = _body.Replace("[RepoIssue0]", pair.Value.Title);
+                        _body = _body.Replace("[RepoAvatar0]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[RepoTitle0]", repo.Name);
+                        _body = _body.Replace("[RepoUrl0]", repo.Url);
+                        _body = _body.Replace("[RepoDescription0]", repo.Description);
+                        _body = _body.Replace("[RepoIssue0]", issue.Title);
                         break;
 
                     case 1:
-                        _body = _body.Replace("[RepoAvatar1]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle1]", pair.Key.Name);
-                        _body = _body.Replace("[RepoUrl1]", pair.Key.Url);
-                        _body = _body.Replace("[RepoDescription1]", pair.Key.Description);
-                        _body = _body.Replace("[RepoIssue1]", pair.Value.Title);
+                        _body = _body.Replace("[RepoAvatar1]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[RepoTitle1]", repo.Name);
+                        _body = _body.Replace("[RepoUrl1]", repo.Url);
+                        _body = _body.Replace("[RepoDescription1]", repo.Description);
+                        _body = _body.Replace("[RepoIssue1]", issue.Title);
                         break;
 
                     case 2:
-                        _body = _body.Replace("[RepoAvatar2]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle2]", pair.Key.Name);
-                        _body = _body.Replace("[RepoUrl2]", pair.Key.Url);
-                        _body = _body.Replace("[RepoDescription2]", pair.Key.Description);
-                        _body = _body.Replace("[RepoIssue2]", pair.Value.Title);
+                        _body = _body.Replace("[RepoAvatar2]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[RepoTitle2]", repo.Name);
+                        _body = _body.Replace("[RepoUrl2]", repo.Url);
+                        _body = _body.Replace("[RepoDescription2]", repo.Description);
+                        _body = _body.Replace("[RepoIssue2]", issue.Title);
                         break;
 
                     case 3:
-                        _body = _body.Replace("[RepoAvatar3]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle3]", pair.Key.Name);
-                        _body = _body.Replace("[RepoUrl3]", pair.Key.Url);
-                        _body = _body.Replace("[RepoDescription3]", pair.Key.Description);
-                        _body = _body.Replace("[RepoIssue3]", pair.Value.Title);
+                        _body = _body.Replace("[RepoAvatar3]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[RepoTitle3]", repo.Name);
+                        _body = _body.Replace("[RepoUrl3]", repo.Url);
+                        _body = _body.Replace("[RepoDescription3]", repo.Description);
+                        _body = _body.Replace("[RepoIssue3]", issue.Title);
                         break;
 
                     case 4:
-                        _body = _body.Replace("[RepoAvatar4]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle4]", pair.Key.Name);
-                        _body = _body.Replace("[RepoUrl4]", pair.Key.Url);
-                        _body = _body.Replace("[RepoDescription4]", pair.Key.Description);
-                        _body = _body.Replace("[RepoIssue4]", pair.Value.Title);
+                        _body = _body.Replace("[RepoAvatar4]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[RepoTitle4]", repo.Name);
+                        _body = _body.Replace("[RepoUrl4]", repo.Url);
+                        _body = _body.Replace("[RepoDescription4]", repo.Description);
+                        _body = _body.Replace("[RepoIssue4]", issue.Title);
                         break;
 
                     case 5:
-                        _body = _body.Replace("[SponsRepoAvatar]", pair.Key.Owner.Avatar_Url);
-                        _body = _body.Replace("[SponsRepoTitle]", pair.Key.Name);
-                        _body = _body.Replace("[SponsRepoUrl]", pair.Key.Url);
-                        _body = _body.Replace("[SponsRepoDescription]", pair.Key.Description);
-                        _body = _body.Replace("[SponsRepoIssue]", pair.Value.Title);
+                        _body = _body.Replace("[SponsRepoAvatar]", repo.Owner.Avatar_Url);
+                        _body = _body.Replace("[SponsRepoTitle]", repo.Name);
+                        _body = _body.Replace("[SponsRepoUrl]", repo.Url);
+                        _body = _body.Replace("[SponsRepoDescription]", repo.Description);
+                        _body = _body.Replace("[SponsRepoIssue]", issue.Title);
                         break;
                 }
             }

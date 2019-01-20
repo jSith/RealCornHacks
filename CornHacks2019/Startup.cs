@@ -26,7 +26,7 @@ namespace CornHacks2019
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IEmailAccessor, EmailAccessor>();
-            services.AddScoped<IGithubAccessor, GithubAccessor>();
+            services.AddScoped<IGithubAccessor, IGithubAccessor>();
             services.AddScoped<ISponsorAccessor, SponsorAccessor>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IEmailEngine, EmailEngine>();

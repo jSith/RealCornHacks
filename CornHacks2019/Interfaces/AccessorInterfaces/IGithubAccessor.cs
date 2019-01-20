@@ -7,5 +7,6 @@ namespace CornHacks2019.Interfaces.AccessorInterfaces
 {
     interface IGithubAccessor
     {
+
     }
 }

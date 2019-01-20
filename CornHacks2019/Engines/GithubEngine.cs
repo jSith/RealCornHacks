@@ -18,16 +18,16 @@ namespace Cornhacks2019.Engines
             _githubAccessor = githubAccessor;
         }
 
-        public async Task<Dictionary<Repository, Issue>> GetValidIssues(User user)
+        public async Task<SortedDictionary<Repository, Issue>> GetValidIssues(User user)
         {
             var allRepoIssues = await GetRepoIssues();
             var validRepoIssues = FilterRepositories(user, allRepoIssues);
             return validRepoIssues; 
         }
 
-        private Dictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
+        private SortedDictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
         {
-            Dictionary<Repository, Issue> finalRepos = new Dictionary<Repository, Issue>();
+            SortedDictionary<Repository, Issue> finalRepos = new SortedDictionary<Repository, Issue>();
 
             foreach (Repository repo in issueLabels.Keys)
             {

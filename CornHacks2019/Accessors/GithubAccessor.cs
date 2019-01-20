@@ -12,6 +12,8 @@ namespace Cornhacks2019.Accessors
     public class GithubAccessor : IGithubAccessor
     {
         private readonly string _githubUrl = "https://api.github.com";
+        private readonly string clientId = Guid.NewGuid().ToString();
+        private readonly string clientSecret = Guid.NewGuid().ToString();
 
         private static HttpClient _client = new HttpClient();
 
@@ -23,7 +25,7 @@ namespace Cornhacks2019.Accessors
         public async Task<List<Issue>> GetIssuesAsync(Repository repo)
         {
             List<Issue> issues = new List<Issue>();
-            string url = _githubUrl + "/repos/" + repo.Owner.Login + "/" + repo.Name + "/issues";
+            string url = _githubUrl + "/repos/" + repo.Owner.Login + "/" + repo.Name + "/issues?client_id={clientId}&client_secret={clientSecret}";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
@@ -35,7 +37,7 @@ namespace Cornhacks2019.Accessors
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
             List<Repository> repo = new List<Repository>(); 
-            string url = _githubUrl + "/repositories";
+            string url = _githubUrl + "/repositories?client_id={clientId}&client_secret={clientSecret}";
             HttpResponseMessage response = await _client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
@@ -46,7 +48,7 @@ namespace Cornhacks2019.Accessors
 
         public async Task<List<string>> GetIssueLabels(Repository repo, int issueId)
         {
-            string url = $"{_githubUrl}/repositories/{repo.Owner.Login}/{repo.Name}/issues/{issueId}/labels";
+            string url = $"{_githubUrl}/repositories/{repo.Owner.Login}/{repo.Name}/issues/{issueId}/labels?client_id={clientId}&client_secret={clientSecret}";
             var response = await _client.GetAsync(url);
             var labelNames = new List<string>(); 
 

@@ -12,9 +12,10 @@ namespace NUnitTestProject1
 {
     public class EmailEngineTests
     {
-        GithubAccessor _githubAccessor = new GithubAccessor();
-        GithubEngine _githubEngine = new GithubEngine();
+        private static GithubAccessor _githubAccessor = new GithubAccessor();
         EmailEngine _emailEngine = new EmailEngine();
+        GithubEngine _githubEngine = new GithubEngine(_githubAccessor);
+
 
         [Test]
         public void TestEmailEngine()
@@ -31,9 +32,7 @@ namespace NUnitTestProject1
             User user = new User();
             user.Email = "safutterman@outlook.com";
 
-            var repositories = await _githubAccessor.GetPublicRepositoriesAsync();
-            //repositories = _githubEngine.FilterRepositories(repositories, user);
-            var dic = await _githubEngine.CreateRepositoryIssueDictionary(repositories);
+            var dic = await _githubEngine.GetValidIssues(user);
             _emailEngine.CreateEmail(dic);
             _emailEngine.SendEmail(user);
             Assert.Pass();
