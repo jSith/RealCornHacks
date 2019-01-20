@@ -31,6 +31,11 @@ namespace NUnitTestProject1
         {
             User user = new User();
             user.Email = "safutterman@outlook.com";
+            user.Preference = new Preference
+            {
+                IsBeginner = false, 
+                Sizes = new List<SizeEnum.Size> { SizeEnum.Size.Medium} 
+            }; 
 
             var dic = await _githubEngine.GetValidIssues(user);
             _emailEngine.CreateEmail(dic);
