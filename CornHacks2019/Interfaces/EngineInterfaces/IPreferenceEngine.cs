@@ -8,6 +8,6 @@ namespace CornHacks2019.Interfaces.EngineInterfaces
 {
     public interface IPreferenceEngine
     {
-        List<Preference> GetAllOptions(); 
+        Preference GetAllOptions(); 
     }
 }

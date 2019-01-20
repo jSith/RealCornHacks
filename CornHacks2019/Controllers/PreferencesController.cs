@@ -20,7 +20,7 @@ namespace Cornhacks2019.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Preference>> GetPreferenceOptions()
+        public ActionResult<Preference> GetPreferenceOptions()
         {
             var options = _preferenceEngine.GetAllOptions();
             return options; 
