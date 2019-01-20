@@ -7,26 +7,20 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Cornhacks2019.Accessors
 {
-        public class UserAccessor : IUserAccessor
-        {
+    public class UserAccessor : IUserAccessor
+    {
 
-        private string _server;
-        private string _database;
-        private string _uid;
-        private string _password;
-        private string _connectionString;
+        private readonly IConfiguration _config;
+        private readonly string _connectionString;
 
-        public UserAccessor()
+        public UserAccessor(IConfiguration config)
         {
-            _server = "localhost";
-            _database = "Cornhacks";
-            _uid = "root";
-            _password = "syfsyndh10";
-            _connectionString = "SERVER=" + _server + ";" + "DATABASE=" +
-                _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";";
+            _config = config;
+            _connectionString = _config.GetSection("Database:ConnectionString").Value;
         }
 
         public User Insert(User user)
@@ -109,6 +103,8 @@ namespace Cornhacks2019.Accessors
                 }
             }
             return user;
+
+
         }
 
         public List<User> Select()
@@ -118,7 +114,7 @@ namespace Cornhacks2019.Accessors
             {
                 connection.Open();
                 string query = @"SELECT u.Email, u.Password, u.IsBeginner, topic.TopicName, language.LanguageName, size.SizeName FROM
-                                   User AS u
+                                    User AS u
 
                             LEFT JOIN(SELECT ut.UserId, ut.TopicId, t.TopicName FROM UserTopic AS ut
 

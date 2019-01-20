@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CornHacks2019.Interfaces.EngineInterfaces
 {
-    interface IEmailEngine
+    public interface IEmailEngine
     {
     }
 }
