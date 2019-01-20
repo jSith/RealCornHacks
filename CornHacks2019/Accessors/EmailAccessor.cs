@@ -5,7 +5,7 @@ using CornHacks2019.Interfaces.AccessorInterfaces;
 
 namespace Cornhacks2019.Accessors
 {
-    class EmailAccessor : IEmailAccessor
+    public class EmailAccessor : IEmailAccessor
     {
     }
 }

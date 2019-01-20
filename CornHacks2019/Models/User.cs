@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Cornhacks2019.Models
 {
-    class User
+    public class User
     {
+        public string Email { get; set; }
+
+        public Preference Preference { get; set; }
+
+        public string Password { get; set; }
+
     }
 }

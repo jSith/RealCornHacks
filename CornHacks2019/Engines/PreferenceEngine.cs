@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Cornhacks2019.Engines
 {
-    class PreferenceEngine : IPreferenceEngine
+    public class PreferenceEngine : IPreferenceEngine
     {
     }
 }

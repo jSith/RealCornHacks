@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Cornhacks2019.Engines
 {
-    class SignupEngine : ISignupEngine
+    public class SignupEngine : ISignupEngine
     {
     }
 }
