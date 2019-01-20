@@ -1,4 +1,5 @@
-﻿using CornHacks2019.Interfaces.EngineInterfaces;
+﻿using Cornhacks2019.Models;
+using CornHacks2019.Interfaces.EngineInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,20 @@ namespace Cornhacks2019.Controllers
         public UserController(ISubscriptionEngine subscriptionEngine)
         {
             _subscriptionEngine = subscriptionEngine;
+        }
+
+        [HttpPost]
+        public ActionResult<User> Subscribe(User user)
+        {
+            var subscribedUser = _subscriptionEngine.Subscribe(user);
+            return subscribedUser;
+        }
+
+        [HttpDelete]
+        public ActionResult<User> Unsubscribe(User user)
+        {
+            var unsubscribedUser = _subscriptionEngine.Unsubscribe(user);
+            return unsubscribedUser;
         }
 
     }

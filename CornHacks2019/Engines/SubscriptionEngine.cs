@@ -13,15 +13,15 @@ namespace Cornhacks2019.Engines
             _userAccessor = userAccessor; 
         }
         
-        public User Subscribe()
+        public User Subscribe(User user)
         {
-            return _userAccessor.AddUser(User); 
+            return _userAccessor.Insert(user); 
 
         }
 
-        public User Unsubscribe()
+        public User Unsubscribe(User user)
         {
-            return _userAccessor.DeleteUser(User); 
+            return _userAccessor.Delete(user); 
         }
     }
 }

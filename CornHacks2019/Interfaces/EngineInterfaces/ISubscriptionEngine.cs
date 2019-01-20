@@ -8,7 +8,7 @@ namespace CornHacks2019.Interfaces.EngineInterfaces
 {
     public interface ISubscriptionEngine
     {
-        User Subscribe();
-        User Unsubscribe(); 
+        User Subscribe(User user);
+        User Unsubscribe(User user); 
     }
 }
