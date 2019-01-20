@@ -3,6 +3,14 @@
 
 USE Cornhacks; 
 
+DROP TABLE IF EXISTS UserSize;
+DROP TABLE IF EXISTS UserTopic;
+DROP TABLE IF EXISTS UserLanguage;
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Language;
+DROP TABLE IF EXISTS Topic;
+DROP TABLE IF EXISTS Size;
+
 CREATE TABLE User (
 UserId INT auto_increment primary key,
 Email nvarchar(255),
