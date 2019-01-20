@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cornhacks2019.Accessors;
+using Cornhacks2019.Engines;
+using CornHacks2019.Interfaces.AccessorInterfaces;
+using CornHacks2019.Interfaces.EngineInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +25,14 @@ namespace CornHacks2019
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddScoped<IEmailAccessor, EmailAccessor>();
+            services.AddScoped<IGithubAccessor, GithubAccessor>();
+            services.AddScoped<ISponsorAccessor, SponsorAccessor>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IEmailEngine, EmailEngine>();
+            services.AddScoped<IGithubEngine, GithubEngine>();
+            services.AddScoped<IPreferenceEngine, PreferenceEngine>();
+            services.AddScoped<ISubscriptionEngine, SubscriptionEngine>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
