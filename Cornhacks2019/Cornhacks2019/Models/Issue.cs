@@ -14,7 +14,7 @@ namespace Cornhacks2019.Models
 
         public string Url { get; set; }
 
-        public List<string> Tag { get; set; }
+        //public List<string> Labels { get; set; }
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿using Cornhacks2019.Accessors;
 using Cornhacks2019.Models;
-﻿using Cornhacks2019.Interfaces.EngineInterfaces;
+using Cornhacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,48 +18,77 @@ namespace Cornhacks2019.Engines
             _githubAccessor = githubAccessor;
         }
 
-        public async Task<Dictionary<Repository, Issue>> GetValidIssues(User user)
+        public async Task<List<Repository>> GetValidIssues(User user)
         {
-            var allRepoIssues = await GetRepoIssues();
+            var allRepoIssues = await _githubAccessor.GetPublicRepositoriesAsync();
             var validRepoIssues = FilterRepositories(user, allRepoIssues);
-            return validRepoIssues; 
+            return validRepoIssues;
         }
 
-        private Dictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
+        private List<Repository> FilterRepositories(User user, List<Repository> repos)
         {
-            Dictionary<Repository, Issue> finalRepos = new Dictionary<Repository, Issue>();
+            var finalRepos = new List<Repository>();
 
-            foreach (Repository repo in issueLabels.Keys)
+            foreach (Repository repo in repos)
             {
-                if (finalRepos.Keys.Count >= 5)
+                if (repo.Issues == null)
                 {
-                    break; 
+                    continue;
                 }
 
-                foreach (string topic in user.Preference.Topics)
+                if (finalRepos.Count >= 5)
                 {
-                    if (!repo.Description.Contains(topic))
+                    break;
+                }
+
+                bool containsTopic = false;
+
+                if (user.Preference == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    foreach (string topic in user.Preference.Topics)
                     {
-                        continue;
+                        if (topic == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (repo.Description == null)
+                            {
+                                continue;
+                            }
+                            if (repo.Description.Contains(topic))
+                            {
+                                containsTopic = true;
+                            }
+                        }
                     }
                 }
 
+
+                var containsLanguage = false;
                 foreach (string language in user.Preference.Languages)
                 {
-                    repo.Languages.ConvertAll(str => str.ToLower());
-                    if (!repo.Languages.Contains(language.ToLower()))
+                    if (repo.Languages != null)
                     {
-                        continue;
+                        if (repo.Languages.Contains(language))
+                        {
+                            containsLanguage = true;
+                        }
                     }
                 }
 
-
+                /*
                 var validIssues = new List<Issue>();
                 if (user.Preference.IsBeginner)
                 {
-                    foreach (var issue in issueLabels[repo].Keys)
+                    foreach (var issue in repo.Issues)
                     {
-                        if (issueLabels[repo][issue].Contains("good first issue"))
+                        if (issue.Labels.Contains("good first issue"))
                         {
                             validIssues.Add(issue);
                         }
@@ -68,10 +97,11 @@ namespace Cornhacks2019.Engines
                     {
                         continue;
                     }
-                }
+                } */ // TODO: figure out encoding
+
+                var goodContributors = false;
 
                 var contributors = repo.NumberOfContributors;
-                bool matchedOne = false;
 
                 foreach (var size in user.Preference.Sizes)
                 {
@@ -79,42 +109,32 @@ namespace Cornhacks2019.Engines
                     var min = range["min"];
                     var max = range["max"];
 
-                    if (contributors > min && contributors < max)
+                    if (contributors >= min && contributors <= max)
                     {
-                        matchedOne = true;
+                        goodContributors = true;
                     }
                 }
 
-                if (!matchedOne)
-                {
-                    continue;
-                }
 
-                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First();
+                if (goodContributors && containsTopic && containsLanguage)
+                {
+                    finalRepos.Add(repo);
+                }
+            }
+
+            if (finalRepos.Count < 5)
+            {
+                var padding = repos.Take(5 - finalRepos.Count).ToList();
+                foreach (var item in padding)
+                {
+                    finalRepos.Add(item);
+                }
             }
 
             return finalRepos;
+
         }
 
 
-        private async Task<Dictionary<Repository, Dictionary<Issue, List<string>>>> GetRepoIssues()
-        {
-            var repos = await _githubAccessor.GetPublicRepositoriesAsync(); 
-            var dict = new Dictionary<Repository, Dictionary<Issue, List<string>>>(); 
-
-            foreach (var repo in repos)
-            {
-                var issues = await _githubAccessor.GetIssuesAsync(repo); 
-                var smallerDict = new Dictionary<Issue, List<string>>(); 
-
-                foreach (var issue in issues)
-                {
-                    var labels = await _githubAccessor.GetIssueLabels(repo, issue.Id);
-                    smallerDict[issue] = labels; 
-                }
-                dict[repo] = smallerDict; 
-            }
-            return dict; 
-        }
     }
 }

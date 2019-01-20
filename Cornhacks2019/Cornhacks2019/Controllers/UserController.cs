@@ -11,16 +11,19 @@ namespace Cornhacks2019.Controllers
     public class UserController : Controller
     {
         private readonly ISubscriptionEngine _subscriptionEngine;
+        private readonly IEmailEngine _emailEngine;
 
-        public UserController(ISubscriptionEngine subscriptionEngine)
+        public UserController(ISubscriptionEngine subscriptionEngine, IEmailEngine emailEngine)
         {
             _subscriptionEngine = subscriptionEngine;
+            _emailEngine = emailEngine;
         }
 
         [HttpPost]
         public ActionResult<User> Subscribe([FromBody] User user)
         {
             var subscribedUser = _subscriptionEngine.Subscribe(user);
+            _emailEngine.SendDigest(subscribedUser);
             return subscribedUser;
         }
 
