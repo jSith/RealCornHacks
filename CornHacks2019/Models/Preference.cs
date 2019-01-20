@@ -9,6 +9,6 @@ namespace Cornhacks2019.Models
         public bool IsBeginner { get; set; }
         public List<string> Topics { get; set; }
         public List<string> Languages { get; set; }
-        public List<int> Sizes { get; set; }
+        public List<SizeEnum.Size> Sizes { get; set; }
     }
 }

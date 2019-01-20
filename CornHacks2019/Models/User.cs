@@ -12,7 +12,5 @@ namespace Cornhacks2019.Models
 
         public string Password { get; set; }
 
-        public bool IsBeginner { get; set; }
-
     }
 }
