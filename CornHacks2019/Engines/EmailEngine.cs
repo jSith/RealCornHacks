@@ -16,7 +16,51 @@ namespace Cornhacks2019.Engines
 
         public void CreateEmail(Dictionary<int, KeyValuePair<Repository, Issue>> dictionary)
         {
-            _body = File.ReadAllText(_filePath);            
+            _body = File.ReadAllText(_filePath);
+            
+            for (int i = 0; i < 5; i++)
+            {
+                var pair = dictionary.GetValueOrDefault(i);
+                switch (i)
+                {
+                    case 0:
+                        _body.Replace("[SponsRepoTitle]", pair.Key.Name);
+                        _body.Replace("[SponsRepoDescription]", pair.Key.Description);
+                        _body.Replace("[SponsRepoIssue]", pair.Value.Title);
+                        break;
+
+                    case 1:
+                        _body.Replace("[RepoTitle0]", pair.Key.Name);
+                        _body.Replace("[RepoDescription0]", pair.Key.Description);
+                        _body.Replace("[RepoIssue0]", pair.Value.Title);
+                        break;
+
+                    case 2:
+                        _body.Replace("[RepoTitle1]", pair.Key.Name);
+                        _body.Replace("[RepoDescription1]", pair.Key.Description);
+                        _body.Replace("[RepoIssue1]", pair.Value.Title);
+                        break;
+
+                    case 3:
+                        _body.Replace("[RepoTitle2]", pair.Key.Name);
+                        _body.Replace("[RepoDescription2]", pair.Key.Description);
+                        _body.Replace("[RepoIssue2]", pair.Value.Title);
+                        break;
+
+                    case 4:
+                        _body.Replace("[RepoTitle3]", pair.Key.Name);
+                        _body.Replace("[RepoDescription3]", pair.Key.Description);
+                        _body.Replace("[RepoIssue3]", pair.Value.Title);
+                        break;
+
+                    case 5:
+                        _body.Replace("[RepoTitle3]", pair.Key.Name);
+                        _body.Replace("[RepoDescription3]", pair.Key.Description);
+                        _body.Replace("[RepoIssue3]", pair.Value.Title);
+                        break;
+                }
+
+            }
         }
         
         public void SendEmail(User user)
