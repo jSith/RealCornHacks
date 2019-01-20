@@ -1,4 +1,5 @@
 ﻿using Cornhacks2019.Models;
+﻿using CornHacks2019.Interfaces.EngineInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Cornhacks2019.Engines
 {
-    public class EmailEngine
+    public class EmailEngine : IEmailEngine
     {
         public void CreateEmail(Dictionary<Repository, List<Issue>> dictionary)
         {

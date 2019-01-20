@@ -1,5 +1,6 @@
 ﻿using Cornhacks2019.Models;
 using MySql.Data.MySqlClient;
+﻿using CornHacks2019.Interfaces.AccessorInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,8 +10,8 @@ using System.Text;
 
 namespace Cornhacks2019.Accessors
 {
-    public class UserAccessor
-    {
+        public class UserAccessor : IUserAccessor
+        {
 
         private string _server;
         private string _database;
