@@ -18,16 +18,16 @@ namespace Cornhacks2019.Engines
             _githubAccessor = githubAccessor;
         }
 
-        public async Task<Dictionary<Repository, List<Issue>>> GetValidIssues(User user)
+        public async Task<Dictionary<Repository, Issue>> GetValidIssues(User user)
         {
             var allRepoIssues = await GetRepoIssues();
             var validRepoIssues = FilterRepositories(user, allRepoIssues);
             return validRepoIssues; 
         }
 
-        private Dictionary<Repository, List<Issue>> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
+        private Dictionary<Repository, Issue> FilterRepositories(User user, Dictionary<Repository, Dictionary<Issue, List<string>>> issueLabels)
         {
-            Dictionary<Repository, List<Issue>> finalRepos = new Dictionary<Repository, List<Issue>>();
+            Dictionary<Repository, Issue> finalRepos = new Dictionary<Repository, Issue>();
 
             foreach (Repository repo in issueLabels.Keys)
             {
@@ -85,7 +85,7 @@ namespace Cornhacks2019.Engines
                     continue; 
                 }
 
-                finalRepos[repo] = user.Preference.IsBeginner ? validIssues : issueLabels[repo].Keys.ToList(); 
+                finalRepos[repo] = user.Preference.IsBeginner ? validIssues.First() : issueLabels[repo].Keys.First(); 
             }
 
             return finalRepos;
