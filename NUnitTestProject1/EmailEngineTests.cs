@@ -19,5 +19,11 @@ namespace NUnitTestProject1
             ee.SendEmail(user);    
         }
 
+        [Test]
+        public void SendFullEmail()
+        {
+
+        }
+
     }
 }
