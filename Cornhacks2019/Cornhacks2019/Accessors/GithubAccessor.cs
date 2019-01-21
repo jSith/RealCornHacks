@@ -34,6 +34,41 @@ namespace Cornhacks2019.Accessors
             return issues;
         }
 
+        public async Task<List<Repository>> SearchPublicRepositoriesAsync(Preference preferences)
+        {
+            var dbos = new List<RepoDBO>();
+
+            List<Repository> repo = new List<Repository>();
+            var query = ConvertPreferenceToRepoQuery(preferences);
+            var url = _githubUrl + "search/repositories" + query;
+
+            HttpResponseMessage response = await _client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                dbos = await response.Content.ReadAsAsync<SearchRepoDTO>().Items;
+            }
+
+            foreach (var dbo in dbos)
+            {
+                var cleanUrl = dbo.Issues_Url.Replace("{/number}", "");
+                var issues = await GetIssuesAsync(cleanUrl);
+                var languages = await GetLanguagesAsync(dbo.Languages_Url);
+
+                repo.Add(new Repository
+                {
+                    Name = dbo.Name,
+                    Description = dbo.Description,
+                    NumberOfContributors = dbo.NumberOfContributors,
+                    Issues = issues,
+                    Url = dbo.Html_Url,
+                    Owner = dbo.Owner,
+                    Languages = languages.Keys.ToList()
+                });
+            }
+            return repo;
+        }
+
+
         public async Task<List<Repository>> GetPublicRepositoriesAsync()
         {
             var dbos = new List<RepoDBO>();
@@ -102,6 +137,30 @@ namespace Cornhacks2019.Accessors
 
             return labelNames;
 
+        }
+
+        private string ConvertPreferenceToRepoQuery(Preference preference)
+        {
+            var languages = preference.Languages;
+            var topics = preference.Topics;
+
+            var queryString = "";
+            var queries = new List<string>(); 
+
+            foreach (var language in languages)
+            {
+                var lQuery = $"language={language}";
+                queries.Add(lQuery); 
+            }
+
+            foreach (var topic in topics)
+            {
+                var tQuery = $"topic={topic}";
+                queries.Add(tQuery); 
+            }
+
+            queryString = string.Join(queries, "&");
+            return queryString; 
         }
     }
 }

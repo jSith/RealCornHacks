@@ -20,7 +20,7 @@ namespace Cornhacks2019.Engines
 
         public async Task<List<Repository>> GetValidIssues(User user)
         {
-            var allRepoIssues = await _githubAccessor.GetPublicRepositoriesAsync();
+            var allRepoIssues = await _githubAccessor.SearchPublicRepositoriesAsync(user.Preference);
             var validRepoIssues = FilterRepositories(user, allRepoIssues);
             return validRepoIssues;
         }
@@ -121,9 +121,9 @@ namespace Cornhacks2019.Engines
                 }
             }
 
-            if (finalRepos.Count < 4)
+            if (finalRepos.Count < 5)
             {
-                var padding = repos.Take(3 - finalRepos.Count).ToList();
+                var padding = repos.Take(5 - finalRepos.Count).ToList();
                 foreach (var item in padding)
                 {
                     finalRepos.Add(item);

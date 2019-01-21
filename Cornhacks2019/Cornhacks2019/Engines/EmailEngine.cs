@@ -13,15 +13,10 @@ namespace Cornhacks2019.Engines
 {
     public class EmailEngine : IEmailEngine
     {
-        private string _filePath = "../../../email/email.html";
+        private string _filePath = "../../../../email/email.html";
         private string _body = "";
 
-        IGithubAccessor _githubAccessor;
-
-        public EmailEngine(IGithubAccessor githubAccessor)
-        {
-            _githubAccessor = githubAccessor;
-        }
+        private IGithubAccessor _githubAccessor;
 
         public async void SendDigest(User user)
         {
@@ -34,45 +29,17 @@ namespace Cornhacks2019.Engines
         {
             _body = File.ReadAllText(_filePath);
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var repo = repos[i];
                 var issue = repo.Issues.First();
 
-                switch (i)
-                {
-                    case 0:
-                        _body = _body.Replace("[RepoAvatar0]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle0]", repo.Name);
-                        _body = _body.Replace("[RepoUrl0]", repo.Url);
-                        _body = _body.Replace("[RepoDescription0]", repo.Description);
-                        _body = _body.Replace("[RepoIssue0]", issue.Title);
-                        break;
-
-                    case 1:
-                        _body = _body.Replace("[RepoAvatar1]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle1]", repo.Name);
-                        _body = _body.Replace("[RepoUrl1]", repo.Url);
-                        _body = _body.Replace("[RepoDescription1]", repo.Description);
-                        _body = _body.Replace("[RepoIssue1]", issue.Title);
-                        break;
-
-                    case 2:
-                        _body = _body.Replace("[RepoAvatar2]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[RepoTitle2]", repo.Name);
-                        _body = _body.Replace("[RepoUrl2]", repo.Url);
-                        _body = _body.Replace("[RepoDescription2]", repo.Description);
-                        _body = _body.Replace("[RepoIssue2]", issue.Title);
-                        break;
-
-                    case 5:
-                        _body = _body.Replace("[SponsRepoAvatar]", repo.Owner.Avatar_Url);
-                        _body = _body.Replace("[SponsRepoTitle]", repo.Name);
-                        _body = _body.Replace("[SponsRepoUrl]", repo.Url);
-                        _body = _body.Replace("[SponsRepoDescription]", repo.Description);
-                        _body = _body.Replace("[SponsRepoIssue]", issue.Title);
-                        break;
-                }
+                _body = _body.Replace($"[RepoAvatar{i}]", repo.Owner.Avatar_Url);
+                _body = _body.Replace($"[RepoTitle{i}]", repo.Name);
+                _body = _body.Replace($"[RepoUrl{i}]", repo.Url);
+                _body = _body.Replace($"[RepoDescription{i}]", repo.Description);
+                _body = _body.Replace($"[RepoIssue{i}]", issue.Title);
+               
             }
         }
 
